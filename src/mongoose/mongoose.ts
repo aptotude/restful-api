@@ -16,6 +16,8 @@ import {
   ContractModel,
   DealParty,
   DealPartyModel,
+  File,
+  FileModel,
   Group,
   GroupModel,
   Listing,
@@ -44,6 +46,7 @@ export class Mongoose {
   public static ContactGroup: ContactGroupModel;
   public static Contract: ContractModel;
   public static DealParty: DealPartyModel;
+  public static File: FileModel;
   public static Group: GroupModel;
   public static Listing: ListingModel;
   public static Offer: OfferModel;
@@ -75,6 +78,7 @@ export class Mongoose {
     Mongoose.ContactGroup = new ContactGroup(config).model;
     Mongoose.Contract = new Contract(config).model;
     Mongoose.DealParty = new DealParty(config).model;
+    Mongoose.File = new File(config).model;
     Mongoose.Group = new Group(config).model;
     Mongoose.Listing = new Listing(config).model;
     Mongoose.Offer = new Offer(config).model;
@@ -95,6 +99,7 @@ export class Mongoose {
       Mongoose.ContactGroup.remove({}),
       Mongoose.Contract.remove({}),
       Mongoose.DealParty.remove({}),
+      Mongoose.File.remove({}),
       Mongoose.Group.remove({}),
       Mongoose.Listing.remove({}),
       Mongoose.Offer.remove({}),

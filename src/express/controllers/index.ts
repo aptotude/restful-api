@@ -7,6 +7,7 @@ export * from "./contactsController";
 export * from "./contactGroupsController";
 export * from "./contractsController";
 export * from "./dealPartiesController";
+export * from "./filesController";
 export * from "./groupsController";
 export * from "./listingsController";
 export * from "./offersController";

@@ -15,9 +15,20 @@ export class UserPermissions extends Permissions {
     // If the user is an admin
     if (user.level === 1) {
       attributes.push(
+        "companyName",
         "email",
+        "firstName",
+        "isActive",
+        "lastName",
+        "level",
         "password",
-        "level"
+        "phone",
+        "phoneCell",
+        "profileId",
+        "resetHash",
+        "smallPhotoUrl",
+        "title",
+        "userRoleId"
       );
     }
 
@@ -37,14 +48,24 @@ export class UserPermissions extends Permissions {
   public async readPermissions(record: UserDocument, user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
       "_id",
-      "email"
+      "companyName",
+      "email",
+      "firstName",
+      "isActive",
+      "lastName",
+      "phone",
+      "phoneCell",
+      "profileId",
+      "smallPhotoUrl",
+      "title",
+      "userRoleId"
     ];
 
     // If user is reading their own record
     if (record.id === user.id) {
       attributes.push(
         "level",
-        "resetHash"
+        "resetHash",
       );
     }
 
@@ -79,17 +100,37 @@ export class UserPermissions extends Permissions {
     // If user is modifying their own record
     if (record.id === user.id) {
       attributes.push(
+        "companyName",
         "email",
-        "password"
+        "firstName",
+        "isActive",
+        "lastName",
+        "phone",
+        "phoneCell",
+        "profileId",
+        "smallPhotoUrl",
+        "title",
+        "userRoleId"
       );
     }
 
     // If the user is an admin
     if (user.level === 1) {
       attributes.push(
+        "companyName",
         "email",
+        "firstName",
+        "isActive",
+        "lastName",
+        "level",
         "password",
-        "level"
+        "phone",
+        "phoneCell",
+        "profileId",
+        "resetHash",
+        "smallPhotoUrl",
+        "title",
+        "userRoleId"
       );
     }
 

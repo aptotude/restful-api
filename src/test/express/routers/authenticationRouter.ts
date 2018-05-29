@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import * as nock from "nock";
 
-import { Mongoose, UserDocument } from "../../../mongoose";
+import { Mongoose, UserDocument, TokenDocument } from "../../../mongoose";
 import { ApiHelper } from "../apiHelper";
 
 const index = require("../../");
@@ -45,8 +45,6 @@ describe("express/routes/authenticationRouter.ts", function() {
   });
 
   describe("POST /authentication/login", function() {
-    let user: UserDocument;
-
     beforeEach(async function() {
       user = await Mongoose.User.mock({ password: "password" });
     });
@@ -119,6 +117,24 @@ describe("express/routes/authenticationRouter.ts", function() {
         password: "newpassword",
         resetHash: user.resetHash
       };
+
+      const res = await apiHelper.request(method, path, params, user);
+
+      expect(res.status).to.eq(200);
+    });
+  });
+
+  describe("GET /authentication/validate-token", function() {
+    let token: TokenDocument;
+
+    beforeEach(async function() {
+      ({ token, user } = await user.login());
+    });
+
+    it("returns a success response", async function() {
+      const method = "get";
+      const path = "/authentication/validate-token";
+      const params = { token };
 
       const res = await apiHelper.request(method, path, params, user);
 

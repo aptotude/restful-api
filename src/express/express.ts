@@ -10,21 +10,22 @@ import * as path from "path";
 import { Config } from "../config";
 import {
   AuthenticationRouter,
-  GroupsRouter,
-  UsersRouter,
+  BuyersNeedsRouter,
   CompsRouter,
   CompaniesRouter,
-  ContactsRouter,
-  TasksRouter,
-  BuyersNeedsRouter,
   ContactGroupsRouter,
-  PropertiesRouter,
-  OwnershipsRouter,
+  ContactsRouter,
   ContractsRouter,
-  ListingsRouter,
-  PursuitsRouter,
   DealPartiesRouter,
-  OffersRouter
+  FilesRouter,
+  GroupsRouter,
+  ListingsRouter,
+  OffersRouter,
+  OwnershipsRouter,
+  PropertiesRouter,
+  PursuitsRouter,
+  TasksRouter,
+  UsersRouter
 } from "./";
 import { mongoSessionStoreMiddleware, queryStringJsonParserMiddleware } from "./";
 import { ContactGroup } from "../mongoose";
@@ -102,6 +103,7 @@ export class Express {
     const contactGroupsRouter = new ContactGroupsRouter(router);
     const contractsRouter = new ContractsRouter(router);
     const dealPartiesRouter = new DealPartiesRouter(router);
+    const filesRouter = new FilesRouter(router);
     const groupsRouter = new GroupsRouter(router);
     const listingsRouter = new ListingsRouter(router);
     const offersRouter = new OffersRouter(router);

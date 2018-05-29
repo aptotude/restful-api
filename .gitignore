@@ -5,3 +5,6 @@ dist/
 node_modules/
 src/documentation/public/apidoc/*
 !src/documentation/public/apidoc/header.md
+
+settings.sh
+settings.test.sh

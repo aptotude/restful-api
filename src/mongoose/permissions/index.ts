@@ -6,6 +6,7 @@ export * from "./contactPermissions";
 export * from "./contactGroupPermissions";
 export * from "./contractPermissions";
 export * from "./dealPartyPermissions";
+export * from "./filePermissions";
 export * from "./groupPermissions";
 export * from "./listingPermissions";
 export * from "./offerPermissions";

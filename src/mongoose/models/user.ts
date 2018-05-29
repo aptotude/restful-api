@@ -14,10 +14,20 @@ export enum UserLevel {
 export interface UserDocument extends mongoose.Document {
   [key: string]: any;
 
+  companyName?: string;
   email?: string;
+  firstName?: string;
+  isActive?: boolean;
+  lastName?: string;
   level?: number;
   password?: string;
+  phone?: string;
+  phoneCell?: string;
+  profileId?: string;
   resetHash?: string;
+  smallPhotoUrl?: string;
+  title?: string;
+  userRoleId?: string;
 
   isValidPassword(password: string): boolean;
   login(): Promise<{ token: TokenDocument, user: UserDocument }>;
@@ -42,6 +52,7 @@ export class User {
 
   private setupSchema(config: Config) {
     this.schema = new mongoose.Schema({
+      companyName: String,
       email: {
         required: true,
         type: String,
@@ -49,6 +60,9 @@ export class User {
         uniqueCaseInsensitive: true,
         validate: /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/,
       },
+      firstName: String,
+      isActive: Boolean,
+      lastName: String,
       level: {
         default: 0,
         type: Number
@@ -57,7 +71,13 @@ export class User {
         required: true,
         type: String
       },
-      resetHash: String
+      phone: String,
+      phoneCell: String,
+      profileId: String,
+      resetHash: String,
+      smallPhotoUrl: String,
+      title: String,
+      userRoleId: String
     }, {
       autoIndex: false,
       timestamps: true
@@ -117,7 +137,7 @@ export class User {
       this.resetHash = chance.hash();
       const user = await this.save();
 
-      const resetUrl = config.passwordReset.url + "?resetHash=" + user.resetHash;
+      const resetUrl = config.passwordReset.url + user.resetHash;
 
       let html = "You have requested to reset your password. Please click the link below to create a new password:";
       html += "<br><br>";

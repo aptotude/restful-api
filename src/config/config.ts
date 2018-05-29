@@ -1,31 +1,3 @@
-export interface IConfig {
-  environment: string;
-  loggly?: {
-    inputToken: string,
-    level?: string,
-    subdomain: string,
-    tags: string[]
-  };
-  mailgun: {
-    domain: string,
-    key: string
-  };
-  mongo: {
-    host: string,
-    port: string,
-    database: string
-  };
-  passwordReset: {
-    company: string,
-    from: string,
-    url: string
-  };
-  server: {
-    host: string,
-    port: string
-  };
-}
-
 export class Config {
   public environment: string;
   public loggly: {
@@ -54,126 +26,28 @@ export class Config {
   };
 
   constructor(env?: string) {
-    env = env || process.env.NODE_ENV;
-    const config: IConfig = this.getConfiguration(env);
+    this.environment = process.env.ENVIRONMENT;
 
-    this.environment = config.environment;
-    this.loggly = config.loggly;
-    this.mailgun = config.mailgun;
-    this.mongo = config.mongo;
-    this.passwordReset = config.passwordReset;
-    this.server = config.server;
-  }
-
-  private getConfiguration(env: string): IConfig {
-    const configurations: { [s: string]: IConfig } = {
-      test: {
-        environment: "test",
-        mailgun: {
-          domain: "sandboxf70783866c584b1980bc071d8029e646.mailgun.org",
-          key: "key-b4bf483017fc43b2e1146d76a66932eb"
-        },
-        mongo: {
-          database: "api_test",
-          host: "127.0.0.1",
-          port: "27017"
-        },
-        passwordReset: {
-          company: "Example Team",
-          from: "no-reply@example.com",
-          url: "http://127.0.0.1:3001/reset-password.html"
-        },
-        server: {
-          host: "127.0.0.1",
-          port: "3001"
-        }
-      },
-      local: {
-        environment: "local",
-        mailgun: {
-          domain: "sandboxf70783866c584b1980bc071d8029e646.mailgun.org",
-          key: "key-b4bf483017fc43b2e1146a4c866932eb",
-        },
-        mongo: {
-          database: "api_local",
-          host: "127.0.0.1",
-          port: "27017"
-        },
-        passwordReset: {
-          company: "Example Team",
-          from: "no-reply@example.com",
-          url: "http://127.0.0.1:3000/reset-password.html"
-        },
-        server: {
-          host: "127.0.0.1",
-          port: "3005"
-        }
-      },
-      dev: {
-        environment: "dev",
-        mailgun: {
-          domain: "sandboxf70783866c584b1980bc071d8029e646.mailgun.org",
-          key: "key-b4bf483017fc43b2e1146d76a66932eb"
-        },
-        mongo: {
-          database: "api_dev",
-          host: "127.0.0.1",
-          port: "27017"
-        },
-        passwordReset: {
-          company: "Example Team",
-          from: "no-reply@example.com",
-          url: "http://127.0.0.1:3000/reset-password.html"
-        },
-        server: {
-          host: "127.0.0.1",
-          port: "3000"
-        }
-      },
-      staging: {
-        environment: "staging",
-        mailgun: {
-          domain: "sandboxf70783866c584b1980bc071d8029e646.mailgun.org",
-          key: "key-b4bf483017fc43b2e1146d76a66932eb"
-        },
-        mongo: {
-          database: "api_staging",
-          host: "127.0.0.1",
-          port: "27017"
-        },
-        passwordReset: {
-          company: "Example Team",
-          from: "no-reply@example.com",
-          url: "http://127.0.0.1:3000/reset-password.html"
-        },
-        server: {
-          host: "127.0.0.1",
-          port: "3000"
-        }
-      },
-      prod: {
-        environment: "prod",
-        mailgun: {
-          domain: "sandboxf70783866c584b1980bc071d8029e646.mailgun.org",
-          key: "key-b4bf483017fc43b2e1146d76a66932eb"
-        },
-        mongo: {
-          database: "api_prod",
-          host: "127.0.0.1",
-          port: "27017"
-        },
-        passwordReset: {
-          company: "Example Team",
-          from: "no-reply@example.com",
-          url: "http://127.0.0.1:3000/reset-password.html"
-        },
-        server: {
-          host: "127.0.0.1",
-          port: "3000"
-        }
-      }
+    this.mailgun = {
+      domain: process.env.MAILGUN_DOMAIN,
+      key: process.env.MAILGUN_KEY
     };
 
-    return configurations[env];
+    this.mongo = {
+      database: process.env.MONGO_DATABASE,
+      host: process.env.MONGO_HOST,
+      port: process.env.MONGO_PORT
+    };
+
+    this.passwordReset = {
+      company: process.env.PASSWORD_RESET_COMPANY,
+      from: process.env.FROM,
+      url: process.env.URL
+    };
+
+    this.server = {
+      host: process.env.SERVER_HOST,
+      port: process.env.SERVER_PORT
+    };
   }
 }

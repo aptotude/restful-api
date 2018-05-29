@@ -5,6 +5,7 @@ export * from "./contact";
 export * from "./contactGroup";
 export * from "./contract";
 export * from "./dealParty";
+export * from "./file";
 export * from "./group";
 export * from "./listing";
 export * from "./offer";
