@@ -11,9 +11,13 @@ export class FilePermissions extends Permissions {
 
   public async createPermissions(user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
+        "compId",
+        "contractId",
         "isPublic",
+        "listingId",
         "name",
-        "ownerId"
+        "ownerId",
+        "pursuitId"
     ];
 
     return attributes;
@@ -28,9 +32,13 @@ export class FilePermissions extends Permissions {
   public async readPermissions(record: FileDocument, user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
         "_id",
+        "compId",
+        "contractId",
         "isPublic",
+        "listingId",
         "name",
-        "ownerId"
+        "ownerId",
+        "pursuitId"
     ];
 
     return attributes;
@@ -42,9 +50,13 @@ export class FilePermissions extends Permissions {
 
   public async updatePermissions(record: FileDocument, user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
+        "compId",
+        "contractId",
         "isPublic",
+        "listingId",
         "name",
-        "ownerId"
+        "ownerId",
+        "pursuitId"
     ];
 
     return attributes;
