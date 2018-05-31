@@ -21,7 +21,6 @@ export interface CompanyDocument extends mongoose.Document {
   numberOfEmployees?: number;
   ownerId?: string;
   phone?: PhoneNumberModel;
-  // properties?: PropertyModel[];
   shippingAddress?: AddressModel;
   type?: string;
   website?: WebsiteModel;

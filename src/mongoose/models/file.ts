@@ -9,10 +9,13 @@ import { Mongoose, UserDocument } from "../";
 export interface FileDocument extends mongoose.Document {
   [key: string]: any;
 
+  compId?: string;
+  contractId?: string;
   isPublic?: boolean;
+  listingId?: string;
   name?: string;
   ownerId?: string;
-  userIds?: mongoose.Types.ObjectId[];
+  pursuitId?: string;
 }
 
 export interface FileModel extends mongoose.Model<FileDocument> {
@@ -30,15 +33,31 @@ export class File {
 
   private setupSchema(config: Config) {
     this.schema = new mongoose.Schema({
+      compId: {
+        ref: "Comp",
+        type: mongoose.Schema.Types.ObjectId
+      },
+      contractId: {
+        ref: "Contract",
+        type: mongoose.Schema.Types.ObjectId
+      },
       isPublic: {
         default: false,
         type: Boolean
+      },
+      listingId: {
+        ref: "Listing",
+        type: mongoose.Schema.Types.ObjectId
       },
       name: String,
       ownerId: {
         ref: "User",
         type: mongoose.Schema.Types.ObjectId
-      }
+      },
+      pursuitId: {
+        ref: "Pursuit",
+        type: mongoose.Schema.Types.ObjectId
+      },
     }, {
       autoIndex: false,
       timestamps: true
