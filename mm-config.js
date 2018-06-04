@@ -1,14 +1,9 @@
 const path = require("path");
 
-const { Config } = require(path.resolve(__dirname, "dist/config"));
-
-const env = process.env.NODE_ENV || "local";
-const config = new Config(env);
-
 const conf = {
-  host: config.mongo.host,
-  port: config.mongo.port,
-  db: config.mongo.database,
+  host: process.env.MONGO_HOST,
+  port: process.env.MONGO_PORT,
+  db: process.env.MONGO_DATABASE,
   collection: "schemaMigrations",
   directory: "mongodb-migrations"
 };

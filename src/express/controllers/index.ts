@@ -16,3 +16,4 @@ export * from "./propertiesController";
 export * from "./pursuitsController";
 export * from "./tasksController";
 export * from "./usersController";
+export * from "./searchController";

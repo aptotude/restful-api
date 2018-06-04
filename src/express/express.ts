@@ -24,6 +24,7 @@ import {
   OwnershipsRouter,
   PropertiesRouter,
   PursuitsRouter,
+  SearchRouter,
   TasksRouter,
   UsersRouter
 } from "./";
@@ -110,6 +111,7 @@ export class Express {
     const ownershipsRouter = new OwnershipsRouter(router);
     const propertiesRouter = new PropertiesRouter(router);
     const pursuitsRouter = new PursuitsRouter(router);
+    const searchRouter = new SearchRouter(router);
     const tasksRouter = new TasksRouter(router);
     const usersRouter = new UsersRouter(router);
   }

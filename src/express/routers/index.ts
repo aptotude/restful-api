@@ -15,3 +15,4 @@ export * from "./propertiesRouter";
 export * from "./pursuitsRouter";
 export * from "./tasksRouter";
 export * from "./usersRouter";
+export * from "./searchRouter";
