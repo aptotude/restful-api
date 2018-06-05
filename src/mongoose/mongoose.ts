@@ -66,6 +66,7 @@ export class Mongoose {
     const database = config.mongo.database;
     const url = uri || `mongodb://${host}:${port}/${database}`;
 
+    console.log("connecting to mongo via", url);
     mongoose.connect(url, (err) => {
       if (err) throw err;
 
