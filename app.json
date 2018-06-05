@@ -10,13 +10,16 @@
       "required": true
     },
     "MONGO_DATABASE": {
-      "required": true
+      "required": false
     },
     "MONGO_HOST": {
-      "required": true
+      "required": false
     },
     "MONGO_PORT": {
-      "required": true
+      "required": false
+    },
+    "MONGODB_URI": {
+      "required": false
     },
     "PASSWORD_RESET_COMPANY": {
       "required": true

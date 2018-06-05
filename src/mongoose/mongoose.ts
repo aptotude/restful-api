@@ -60,10 +60,11 @@ export class Mongoose {
   constructor(config: Config) {
     (mongoose as any).Promise = global.Promise;
 
+    const uri = config.mongo.uri;
     const host = config.mongo.host;
     const port = config.mongo.port;
     const database = config.mongo.database;
-    const url = `mongodb://${host}:${port}/${database}`;
+    const url = uri || `mongodb://${host}:${port}/${database}`;
 
     mongoose.connect(url, (err) => {
       if (err) throw err;
