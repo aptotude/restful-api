@@ -3,6 +3,10 @@
   "description": "Typescript Restful API",
   "main": "dist/index.js",
   "engine": "node 8.1.2",
+  "engines": {
+    "node": "8.1.2",
+    "npm": "6.0.1"
+  },
   "license": "Apache-2.0",
   "version": "0.0.0",
   "repository": {
