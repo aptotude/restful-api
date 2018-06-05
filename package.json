@@ -26,6 +26,7 @@
     "grunt:serve": "grunt serve",
     "grunt:test": "grunt && npm test",
     "grunt:watch": "grunt watch",
+    "heroku-postbuild": "mm",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "migrations:create": "mm create",
     "migrations:run": "mm",
