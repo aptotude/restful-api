@@ -43,6 +43,7 @@ export class DealPartyPermissions extends Permissions {
       "company",
       "contactId",
       "contractId",
+      "createdAt",
       "listingId",
       "ownerId",
       "pursuitId",
@@ -52,7 +53,8 @@ export class DealPartyPermissions extends Permissions {
       "saleDate",
       "salePrice",
       "salePriceSF",
-      "transactionCompany"
+      "transactionCompany",
+      "updatedAt"
     ];
 
     return attributes;

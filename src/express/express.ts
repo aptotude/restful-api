@@ -9,6 +9,10 @@ import * as path from "path";
 
 import { Config } from "../config";
 import {
+  delayMiddleware,
+  mongoSessionStoreMiddleware,
+  queryStringJsonParserMiddleware,
+
   AuthenticationRouter,
   BuyersNeedsRouter,
   CompsRouter,
@@ -16,6 +20,7 @@ import {
   ContactGroupsRouter,
   ContactsRouter,
   ContractsRouter,
+  DataRouter,
   DealPartiesRouter,
   FilesRouter,
   GroupsRouter,
@@ -28,7 +33,6 @@ import {
   TasksRouter,
   UsersRouter
 } from "./";
-import { mongoSessionStoreMiddleware, queryStringJsonParserMiddleware } from "./";
 import { ContactGroup } from "../mongoose";
 
 export class Express {
@@ -51,6 +55,9 @@ export class Express {
     // Sets up body parser so we can access req.body in controllers
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json({ limit: "50mb" }));
+
+    // Delays all API calls to mimic Salesforce latency
+    this.app.use(delayMiddleware);
 
     // Sets up Mongo to store our user web sessions
     this.app.use(mongoSessionStoreMiddleware);
@@ -103,6 +110,7 @@ export class Express {
     const contactsRouter = new ContactsRouter(router);
     const contactGroupsRouter = new ContactGroupsRouter(router);
     const contractsRouter = new ContractsRouter(router);
+    const dataRouter = new DataRouter(router);
     const dealPartiesRouter = new DealPartiesRouter(router);
     const filesRouter = new FilesRouter(router);
     const groupsRouter = new GroupsRouter(router);

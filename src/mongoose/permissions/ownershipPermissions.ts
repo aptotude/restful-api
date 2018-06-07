@@ -35,9 +35,11 @@ export class OwnershipPermissions extends Permissions {
       "companyIdFromTrigger",
       "contactId",
       "contactRole",
+      "createdAt",
       "isPrimaryContact",
       "ownerId",
-      "propertyId"
+      "propertyId",
+      "updatedAt"
     ];
 
     return attributes;

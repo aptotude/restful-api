@@ -20,7 +20,7 @@ describe("express/routes/searchRouter.ts", function() {
     it("returns a success response", async function() {
       const method = "get";
       const path = "/search";
-      const params: any = { search: "" };
+      const params: any = { search: chance.hash() };
 
       const res = await apiHelper.request(method, path, params, admin);
 

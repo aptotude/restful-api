@@ -42,6 +42,7 @@ export class OfferPermissions extends Permissions {
       "additionalDeposit",
       "closeDate",
       "contractId",
+      "createdAt",
       "feasibilityPeriod",
       "financingPeriod",
       "independentConsideration",
@@ -52,7 +53,8 @@ export class OfferPermissions extends Permissions {
       "offerPrice",
       "ownerId",
       "purchaserId",
-      "status"
+      "status",
+      "updatedAt"
     ];
 
     return attributes;

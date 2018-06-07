@@ -39,6 +39,7 @@ export class CompanyPermissions extends Permissions {
       "billingAddress",
       "category",
       "contacts",
+      "createdAt",
       "description",
       "fax",
       "name",
@@ -47,6 +48,7 @@ export class CompanyPermissions extends Permissions {
       "phone",
       "shippingAddress",
       "type",
+      "updatedAt",
       "website"
     ];
 

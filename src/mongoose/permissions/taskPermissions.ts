@@ -43,6 +43,7 @@ export class TaskPermissions extends Permissions {
       "callDisposition",
       "callResult",
       "contactId",
+      "createdAt",
       "description",
       "dueDate",
       "isComplete",
@@ -55,7 +56,8 @@ export class TaskPermissions extends Permissions {
       "subject",
       "type",
       "whatId",
-      "whatName"
+      "whatName",
+      "updatedAt"
     ];
 
     return attributes;

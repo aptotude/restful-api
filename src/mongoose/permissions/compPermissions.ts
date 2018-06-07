@@ -73,6 +73,7 @@ export class CompPermissions extends Permissions {
       "commissionAmount",
       "commissionPercent",
       "contractId",
+      "createdAt",
       "downPayment",
       "grossCommissionAmount",
       "leaseCommencementDate",
@@ -99,7 +100,8 @@ export class CompPermissions extends Permissions {
       "tenancyAtClose",
       "termRemainingAtClose",
       "type",
-      "units"
+      "units",
+      "updatedAt"
     ];
 
     return attributes;

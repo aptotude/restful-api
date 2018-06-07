@@ -50,20 +50,24 @@ export class GroupPermissions extends Permissions {
       // If user is the owner of the group, a member of the group, or the group is public.
       if (record.ownerId.equals(user._id) || record.userIds.indexOf(user._id) >= 0 || !record.isPrivate) {
         attributes.push(
+          "createdAt",
           "isPrivate",
           "name",
           "owner",
           "ownerId",
+          "updatedAt",
           "users",
           "userIds"
         );
       }
     } else {
       attributes.push(
+        "createdAt",
         "isPrivate",
         "name",
         "owner",
         "ownerId",
+        "updatedAt",
         "users",
         "userIds"
       );

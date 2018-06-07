@@ -44,6 +44,7 @@ export class BuyersNeedPermissions extends Permissions {
       "buildingType",
       "buyerQuality",
       "contactId",
+      "createdAt",
       "isActive",
       "market",
       "maxPrice",
@@ -55,7 +56,8 @@ export class BuyersNeedPermissions extends Permissions {
       "minPrice",
       "minSquareFootage",
       "name",
-      "ownerId"
+      "ownerId",
+      "updatedAt"
     ];
 
     return attributes;

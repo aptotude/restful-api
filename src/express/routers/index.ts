@@ -5,6 +5,7 @@ export * from "./companiesRouter";
 export * from "./contactsRouter";
 export * from "./contactGroupsRouter";
 export * from "./contractsRouter";
+export * from "./dataRouter";
 export * from "./dealPartiesRouter";
 export * from "./filesRouter";
 export * from "./groupsRouter";

@@ -42,15 +42,18 @@ export class PursuitPermissions extends Permissions {
       "clientCompanyId",
       "clientContactId",
       "commissionAmount",
+      "createdAt",
       "createdDate",
       "lastModifiedDate",
       "name",
+      "ownerId",
       "probability",
       "propertyId",
       "recordTypeId",
       "sellerPriceExpectation",
       "status",
-      "type"
+      "type",
+      "updatedAt"
     ];
 
     return attributes;

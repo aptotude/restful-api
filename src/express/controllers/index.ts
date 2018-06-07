@@ -6,6 +6,7 @@ export * from "./companiesController";
 export * from "./contactsController";
 export * from "./contactGroupsController";
 export * from "./contractsController";
+export * from "./dataController";
 export * from "./dealPartiesController";
 export * from "./filesController";
 export * from "./groupsController";

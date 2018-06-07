@@ -64,6 +64,7 @@ export class ContractPermissions extends Permissions {
       "commissionAmount",
       "contractCloseDate",
       "contractPrice",
+      "createdAt",
       "createdDate",
       "deposit",
       "description",
@@ -72,6 +73,7 @@ export class ContractPermissions extends Permissions {
       "landlordContactId",
       "lastModifiedDate",
       "listingId",
+      "ownerId",
       "name",
       "probability",
       "propertyId",
@@ -84,7 +86,8 @@ export class ContractPermissions extends Permissions {
       "tenantCompanyId",
       "tenantContactId",
       "titleCompanyAttorneyContactId",
-      "type"
+      "type",
+      "updatedAt"
     ];
 
     return attributes;

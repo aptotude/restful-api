@@ -34,11 +34,13 @@ export class FilePermissions extends Permissions {
         "_id",
         "compId",
         "contractId",
+        "createdAt",
         "isPublic",
         "listingId",
         "name",
         "ownerId",
-        "pursuitId"
+        "pursuitId",
+        "updatedAt"
     ];
 
     return attributes;

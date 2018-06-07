@@ -45,6 +45,7 @@ export class ContactPermissions extends Permissions {
       "address",
       "companyId",
       "company",
+      "createdAt",
       "description",
       "email",
       "email2",
@@ -59,7 +60,8 @@ export class ContactPermissions extends Permissions {
       "phone",
       "selectedCompany",
       "title",
-      "type"
+      "type",
+      "updatedAt"
     ];
 
     return attributes;

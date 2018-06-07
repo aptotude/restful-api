@@ -29,11 +29,13 @@ export class ContactGroupPermissions extends Permissions {
   public async readPermissions(record: ContactGroupDocument, user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
       "_id",
+      "createdAt",
       "createdDate",
       "memberIds",
       "name",
       "numberOfMembers",
-      "ownerId"
+      "ownerId",
+      "updatedAt"
     ];
 
     return attributes;

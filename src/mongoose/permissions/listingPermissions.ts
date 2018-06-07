@@ -64,6 +64,7 @@ export class ListingPermissions extends Permissions {
       "capRate",
       "commission",
       "commissionAmount",
+      "createdAt",
       "createdDate",
       "dateOffMarket",
       "dateOnMarket",
@@ -81,6 +82,7 @@ export class ListingPermissions extends Permissions {
       "noi",
       "onMarketStatus",
       "ownerContact",
+      "ownerId",
       "probability",
       "propertyId",
       "propertyType",
@@ -92,6 +94,7 @@ export class ListingPermissions extends Permissions {
       "stage",
       "totalReturn",
       "type",
+      "updatedAt",
       "yield"
     ];
 

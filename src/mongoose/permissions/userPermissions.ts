@@ -49,6 +49,7 @@ export class UserPermissions extends Permissions {
     const attributes: string[] = [
       "_id",
       "companyName",
+      "createdAt",
       "email",
       "firstName",
       "isActive",
@@ -58,6 +59,7 @@ export class UserPermissions extends Permissions {
       "profileId",
       "smallPhotoUrl",
       "title",
+      "updatedAt",
       "userRoleId"
     ];
 
