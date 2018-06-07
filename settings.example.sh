@@ -21,3 +21,4 @@ PASSWORD_RESET_URL="http://127.0.0.1:8080/#/password-reset/"
 # Express Server
 SERVER_HOST="127.0.0.1"
 SERVER_PORT="3005"
+REQUEST_DELAY="0"
