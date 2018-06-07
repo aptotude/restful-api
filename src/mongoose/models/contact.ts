@@ -32,7 +32,6 @@ export interface ContactDocument extends mongoose.Document {
 
   address?: AddressModel;
   companyId?: any;
-  company?: CompanyDocument;
   description?: string;
   email?: EmailAddressModel;
   email2?: EmailAddressModel;

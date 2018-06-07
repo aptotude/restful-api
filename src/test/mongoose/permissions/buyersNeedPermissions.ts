@@ -13,7 +13,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
     it("creates a new record", async function() {
       const user = await Mongoose.User.mock();
       const params = {
-        aquisitionType: chance.hash(),
+        acquisitionType: chance.hash(),
         buildingType: chance.hash(),
         buyerQuality: chance.hash(),
         contactId: chance.hash(),
@@ -32,7 +32,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
 
       const record = <BuyersNeedDocument> await permissions.create(params, {}, user);
 
-      expect(record.aquisitionType).to.eql(params.aquisitionType);
+      expect(record.acquisitionType).to.eql(params.acquisitionType);
       expect(record.buildingType).to.eql(params.buildingType);
       expect(record.buyerQuality).to.eql(params.buyerQuality);
       expect(record.contactId).to.eql(params.contactId);
@@ -55,7 +55,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
 
     beforeEach(async function() {
       record = await Mongoose.BuyersNeed.mock({
-        aquisitionType: chance.hash(),
+        acquisitionType: chance.hash(),
         buildingType: chance.hash(),
         buyerQuality: chance.hash(),
         contactId: chance.hash(),
@@ -78,7 +78,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
 
       record = <BuyersNeedDocument> await permissions.read(record, user);
 
-      expect(record.aquisitionType).to.exist;
+      expect(record.acquisitionType).to.exist;
       expect(record.buildingType).to.exist;
       expect(record.buyerQuality).to.exist;
       expect(record.contactId).to.exist;
@@ -122,7 +122,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
     it("updates and returns the record", async function() {
       const user = await Mongoose.User.mock();
       const params = {
-        aquisitionType: chance.hash(),
+        acquisitionType: chance.hash(),
         buildingType: chance.hash(),
         buyerQuality: chance.hash(),
         contactId: chance.hash(),
@@ -141,7 +141,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
 
       record = <BuyersNeedDocument> await permissions.update(record, params, {}, user);
 
-      expect(record.aquisitionType).to.eql(params.aquisitionType);
+      expect(record.acquisitionType).to.eql(params.acquisitionType);
       expect(record.buildingType).to.eql(params.buildingType);
       expect(record.buyerQuality).to.eql(params.buyerQuality);
       expect(record.contactId).to.eql(params.contactId);

@@ -11,7 +11,7 @@ export class BuyersNeedPermissions extends Permissions {
 
   public async createPermissions(user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
-      "aquisitionType",
+      "acquisitionType",
       "buildingType",
       "buyerQuality",
       "contactId",
@@ -40,7 +40,7 @@ export class BuyersNeedPermissions extends Permissions {
   public async readPermissions(record: BuyersNeedDocument, user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
       "_id",
-      "aquisitionType",
+      "acquisitionType",
       "buildingType",
       "buyerQuality",
       "contactId",
@@ -69,7 +69,7 @@ export class BuyersNeedPermissions extends Permissions {
 
   public async updatePermissions(record: BuyersNeedDocument, user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
-      "aquisitionType",
+      "acquisitionType",
       "buildingType",
       "buyerQuality",
       "contactId",

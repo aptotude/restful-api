@@ -11,7 +11,7 @@ export class BuyersNeedsRouter {
      * @api {Object} BuyersNeed BuyersNeed
      * @apiName BuyersNeed
      * @apiGroup Models
-     * @apiParam {String} aquisitionType
+     * @apiParam {String} acquisitionType
      * @apiParam {String} buildingType
      * @apiParam {String} buyerQuality
      * @apiParam {String} contactId

@@ -7,7 +7,7 @@ import { Mongoose } from "../";
 export interface BuyersNeedDocument extends mongoose.Document {
   [key: string]: any;
 
-  aquisitionType?: string;
+  acquisitionType?: string;
   buildingType?: string;
   buyerQuality?: string;
   contactId?: string;
@@ -40,7 +40,7 @@ export class BuyersNeed {
 
   private setupSchema(config: Config) {
     this.schema = new mongoose.Schema({
-      aquisitionType: String,
+      acquisitionType: String,
       buildingType: String,
       buyerQuality: String,
       contactId: String,

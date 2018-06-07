@@ -14,7 +14,6 @@ export interface CompanyDocument extends mongoose.Document {
 
   billingAddress?: AddressModel;
   category?: string;
-  contacts?: ContactDocument[];
   description?: string;
   fax?: PhoneNumberModel;
   name?: string;

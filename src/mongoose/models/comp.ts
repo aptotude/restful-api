@@ -20,21 +20,29 @@ export interface CompDocument extends mongoose.Document {
   contractId?: string;
   downPayment?: number;
   grossCommissionAmount?: number;
+  landlordCompanyId?: string;
+  landlordContactId?: string;
   leaseCommencementDate?: Date;
   leaseExpirationDate?: Date;
   leaseTermMonths?: number;
   leaseTotal?: number;
   leaseType?: string;
+  leasedPropertyId?: string;
   listingId?: string;
   mortgageAmount?: number;
   name?: string;
   netOperatingIncome?: number;
   occupancyAtClose?: number;
+  occupancyDate?: Date;
+  options?: string;
   ownerId?: string;
   priceType?: string;
   pursuitId?: string;
   recordTypeId?: string;
   recordType?: string;
+  rentCommencementDate?: Date;
+  rentalRate?: number;
+  rentalRateType?: string;
   researchComplete?: boolean;
   salePrice?: number;
   sellerId?: string;
@@ -42,7 +50,10 @@ export interface CompDocument extends mongoose.Document {
   soldPropertyId?: string;
   squareFootage?: number;
   tenancyAtClose?: string;
+  tenantCompanyId?: string;
+  tenantContactId?: string;
   termRemainingAtClose?: string;
+  transactionDate?: Date;
   type?: string;
   units?: number;
 }
@@ -80,6 +91,7 @@ export class Comp {
       leaseTermMonths: Number,
       leaseTotal: Number,
       leaseType: String,
+      leasedPropertyId: String,
       listingId: String,
       mortgageAmount: Number,
       name: String,
