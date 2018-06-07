@@ -1,0 +1,47 @@
+{
+  "name": "nibbler",
+  "scripts": {
+  },
+  "env": {
+    "MAILGUN_DOMAIN": {
+       "required": true
+    },
+    "MAILGUN_KEY": {
+      "required": true
+    },
+    "MONGO_DATABASE": {
+      "required": false
+    },
+    "MONGO_HOST": {
+      "required": false
+    },
+    "MONGO_PORT": {
+      "required": false
+    },
+    "MONGODB_URI": {
+      "required": false
+    },
+    "PASSWORD_RESET_COMPANY": {
+      "required": true
+    },
+    "PASSWORD_RESET_FROM": {
+      "required": true
+    },
+    "PASSWORD_RESET_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+    "logentries"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

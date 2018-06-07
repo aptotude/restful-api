@@ -3,6 +3,10 @@
   "description": "Typescript Restful API",
   "main": "dist/index.js",
   "engine": "node 8.1.2",
+  "engines": {
+    "node": "8.1.2",
+    "npm": "6.0.1"
+  },
   "license": "Apache-2.0",
   "version": "0.0.0",
   "repository": {
@@ -26,6 +30,7 @@
     "grunt:serve": "grunt serve",
     "grunt:test": "grunt && npm test",
     "grunt:watch": "grunt watch",
+    "heroku-postbuild": "grunt && mm",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "migrations:create": "mm create",
     "migrations:run": "mm",

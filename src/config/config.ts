@@ -13,7 +13,8 @@ export class Config {
   public mongo: {
     host: string,
     port: string,
-    database: string
+    database: string,
+    uri?: string
   };
   public passwordReset: {
     company: string,
@@ -36,7 +37,8 @@ export class Config {
     this.mongo = {
       database: process.env.MONGO_DATABASE,
       host: process.env.MONGO_HOST,
-      port: process.env.MONGO_PORT
+      port: process.env.MONGO_PORT,
+      uri: process.env.MONGODB_URI
     };
 
     this.passwordReset = {
@@ -47,7 +49,7 @@ export class Config {
 
     this.server = {
       host: process.env.SERVER_HOST,
-      port: process.env.SERVER_PORT
+      port: process.env.SERVER_PORT || process.env.PORT
     };
   }
 }
