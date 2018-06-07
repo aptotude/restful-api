@@ -72,6 +72,7 @@ export class CompPermissions extends Permissions {
 
   public async readPermissions(record: CompDocument, user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
+      "_id",
       "askingPrice",
       "archive",
       "buildingClass",
