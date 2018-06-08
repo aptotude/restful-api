@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as fs from "fs";
+import * as mongoose from "mongoose";
 
 import {
     BuyersNeedsController,
@@ -72,6 +73,8 @@ export class DataController {
         if (req.body.reset) {
             await this.removeUserDocuments(req.user);
         }
+
+        req.body = this.replaceObjectIds(req.body);
 
         const createPromises: any[] = [];
 
@@ -177,6 +180,25 @@ export class DataController {
             Mongoose.Pursuit.remove({ ownerId: user._id }),
             Mongoose.Task.remove({ ownerId: user._id })
         ]);
+    }
+
+    /**
+     * Generates new ObjectIds for each ObjectId value on the given object.
+     * @param data The data object to replace ObjectIds on.
+     */
+    private replaceObjectIds(data: any) {
+        let json = JSON.stringify(data);
+
+        const matches = json.match(/[0-9a-f]{24}/g);
+        const uniqueMatches = matches.filter((match, i, arr) => arr.indexOf(match) === i);
+
+        uniqueMatches.forEach((match) => {
+            const objectId = mongoose.Types.ObjectId();
+            const regex = new RegExp(match, "g");
+            json = json.replace(regex, objectId.toHexString());
+        });
+
+        return JSON.parse(json);
     }
 
 }

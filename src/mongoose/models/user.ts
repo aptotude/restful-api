@@ -25,7 +25,6 @@ export interface UserDocument extends mongoose.Document {
   phoneCell?: string;
   profileId?: string;
   resetHash?: string;
-  responseDelay?: number;
   smallPhotoUrl?: string;
   title?: string;
   userRoleId?: string;
@@ -76,7 +75,6 @@ export class User {
       phoneCell: String,
       profileId: String,
       resetHash: String,
-      responseDelay: Number,
       smallPhotoUrl: String,
       title: String,
       userRoleId: String
