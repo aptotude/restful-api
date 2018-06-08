@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, DealPartyDocument, DealPartyPermissions } from "../../../mongoose";
+import { DealParty, DealPartyDocument, DealPartyPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new DealPartyPermissions();
 describe("mongoose/permissions/dealPartyPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         compId: chance.hash(),
         company: chance.hash(),
@@ -50,7 +50,7 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
     let record: DealPartyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.DealParty.mock({
+      record = await DealParty.mock({
         compId: chance.hash(),
         company: chance.hash(),
         contactId: chance.hash(),
@@ -68,7 +68,7 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <DealPartyDocument> await permissions.read(record, user);
 
@@ -92,11 +92,11 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
     let record: DealPartyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.DealParty.mock();
+      record = await DealParty.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <DealPartyDocument> await permissions.remove(record, user);
 
@@ -108,11 +108,11 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
     let record: DealPartyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.DealParty.mock();
+      record = await DealParty.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         compId: chance.hash(),
         company: chance.hash(),
@@ -149,7 +149,7 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

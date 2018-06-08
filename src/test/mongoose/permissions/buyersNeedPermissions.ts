@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, BuyersNeedDocument, BuyersNeedPermissions, BuyersNeed } from "../../../mongoose";
+import { BuyersNeed, BuyersNeedDocument, BuyersNeedPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new BuyersNeedPermissions();
 describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         acquisitionType: chance.hash(),
         buildingType: chance.hash(),
@@ -54,7 +54,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
     let record: BuyersNeedDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.BuyersNeed.mock({
+      record = await BuyersNeed.mock({
         acquisitionType: chance.hash(),
         buildingType: chance.hash(),
         buyerQuality: chance.hash(),
@@ -74,7 +74,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <BuyersNeedDocument> await permissions.read(record, user);
 
@@ -100,11 +100,11 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
     let record: BuyersNeedDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.BuyersNeed.mock();
+      record = await BuyersNeed.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <BuyersNeedDocument> await permissions.remove(record, user);
 
@@ -116,11 +116,11 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
     let record: BuyersNeedDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.BuyersNeed.mock();
+      record = await BuyersNeed.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         acquisitionType: chance.hash(),
         buildingType: chance.hash(),
@@ -161,7 +161,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

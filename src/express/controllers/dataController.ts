@@ -21,21 +21,35 @@ import {
 } from "./";
 
 import {
-    Mongoose,
+    BuyersNeed,
     BuyersNeedPermissions,
+    Company,
     CompanyPermissions,
+    Comp,
     CompPermissions,
+    ContactGroup,
     ContactGroupPermissions,
+    Contact,
     ContactPermissions,
+    Contract,
     ContractPermissions,
+    DealParty,
     DealPartyPermissions,
+    Group,
     GroupPermissions,
+    Listing,
     ListingPermissions,
+    Offer,
     OfferPermissions,
+    Ownership,
     OwnershipPermissions,
+    Property,
     PropertyPermissions,
+    Pursuit,
     PursuitPermissions,
+    Task,
     TaskPermissions,
+    User,
     UserPermissions,
     UserDocument
 } from "../../mongoose";
@@ -165,20 +179,20 @@ export class DataController {
      */
     private removeUserDocuments(user: UserDocument) {
         return Promise.all([
-            Mongoose.BuyersNeed.remove({ ownerId: user._id }),
-            Mongoose.Company.remove({ ownerId: user._id }),
-            Mongoose.Comp.remove({ ownerId: user._id }),
-            Mongoose.ContactGroup.remove({ ownerId: user._id }),
-            Mongoose.Contact.remove({ ownerId: user._id }),
-            Mongoose.Contract.remove({ ownerId: user._id }),
-            Mongoose.DealParty.remove({ ownerId: user._id }),
-            Mongoose.Group.remove({ ownerId: user._id }),
-            Mongoose.Listing.remove({ ownerId: user._id }),
-            Mongoose.Offer.remove({ ownerId: user._id }),
-            Mongoose.Ownership.remove({ ownerId: user._id }),
-            Mongoose.Property.remove({ ownerId: user._id }),
-            Mongoose.Pursuit.remove({ ownerId: user._id }),
-            Mongoose.Task.remove({ ownerId: user._id })
+            BuyersNeed.remove({ ownerId: user._id }),
+            Company.remove({ ownerId: user._id }),
+            Comp.remove({ ownerId: user._id }),
+            ContactGroup.remove({ ownerId: user._id }),
+            Contact.remove({ ownerId: user._id }),
+            Contract.remove({ ownerId: user._id }),
+            DealParty.remove({ ownerId: user._id }),
+            Group.remove({ ownerId: user._id }),
+            Listing.remove({ ownerId: user._id }),
+            Offer.remove({ ownerId: user._id }),
+            Ownership.remove({ ownerId: user._id }),
+            Property.remove({ ownerId: user._id }),
+            Pursuit.remove({ ownerId: user._id }),
+            Task.remove({ ownerId: user._id })
         ]);
     }
 

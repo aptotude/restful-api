@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { Chance } from "chance";
 
-import { Mongoose, UserDocument, DealPartyDocument } from "../../../mongoose";
+import { DealParty, DealPartyDocument, User, UserDocument } from "../../../mongoose";
 import { ApiHelper } from "../apiHelper";
 
 const index = require("../../");
 
-const apiHelper = new ApiHelper(index.config);
+const apiHelper = new ApiHelper();
 const chance = new Chance();
 
 describe("express/routes/dealPartiesRouter.ts", function() {
@@ -14,8 +14,8 @@ describe("express/routes/dealPartiesRouter.ts", function() {
   let dealParty: DealPartyDocument;
 
   beforeEach(async function() {
-    admin = await Mongoose.User.mock();
-    dealParty = await Mongoose.DealParty.mock({ ownerId: admin._id });
+    admin = await User.mock();
+    dealParty = await DealParty.mock({ ownerId: admin._id });
   });
 
   describe("GET /deal-parties", function() {

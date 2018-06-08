@@ -7,7 +7,6 @@ import * as http from "http";
 import * as morgan from "morgan";
 import * as path from "path";
 
-import { Config } from "../config";
 import {
   delayMiddleware,
   mongoSessionStoreMiddleware,
@@ -39,10 +38,10 @@ export class Express {
   public app: express.Application;
   public server: http.Server;
 
-  constructor(config: Config) {
+  constructor() {
     this.app = express();
 
-    if (config.environment !== "test") {
+    if (process.env.ENVIRONMENT !== "test") {
       this.app.use(morgan("dev"));
     }
 
@@ -68,10 +67,10 @@ export class Express {
     this.app.use(express.static(path.resolve(__dirname, "views")));
     this.setupRouters();
 
-    this.server = this.app.listen(config.server.port, (err: any) => {
+    this.server = this.app.listen(process.env.SERVER_PORT, (err: any) => {
       if (err) console.error(err);
 
-      if (config.environment !== "test") console.log("Express server running on port " + config.server.port + ".");
+      if (process.env.ENVIRONMENT !== "test") console.log("Express server running on port " + process.env.SERVER_PORT + ".");
     });
   }
 

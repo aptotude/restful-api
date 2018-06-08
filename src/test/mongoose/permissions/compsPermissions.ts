@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, CompDocument, CompPermissions } from "../../../mongoose";
+import { Comp, CompDocument, CompPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new CompPermissions();
 describe("mongoose/permissions/compPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         archive: chance.bool(),
         askingPrice: chance.integer(),
@@ -94,7 +94,7 @@ describe("mongoose/permissions/compPermissions.ts", function() {
     let record: CompDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Comp.mock({
+      record = await Comp.mock({
         archive: chance.bool(),
         askingPrice: chance.integer(),
         buildingClass: chance.hash(),
@@ -134,7 +134,7 @@ describe("mongoose/permissions/compPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <CompDocument> await permissions.read(record, user);
 
@@ -180,11 +180,11 @@ describe("mongoose/permissions/compPermissions.ts", function() {
     let record: CompDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Comp.mock();
+      record = await Comp.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <CompDocument> await permissions.remove(record, user);
 
@@ -196,11 +196,11 @@ describe("mongoose/permissions/compPermissions.ts", function() {
     let record: CompDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Comp.mock();
+      record = await Comp.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         archive: chance.bool(),
         askingPrice: chance.integer(),
@@ -281,7 +281,7 @@ describe("mongoose/permissions/compPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

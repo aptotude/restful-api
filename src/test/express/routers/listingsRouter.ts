@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { Chance } from "chance";
 
-import { Mongoose, UserDocument, ListingDocument } from "../../../mongoose";
+import { Listing, ListingDocument, User, UserDocument } from "../../../mongoose";
 import { ApiHelper } from "../apiHelper";
 
 const index = require("../../");
 
-const apiHelper = new ApiHelper(index.config);
+const apiHelper = new ApiHelper();
 const chance = new Chance();
 
 describe("express/routes/listingsRouter.ts", function() {
@@ -14,8 +14,8 @@ describe("express/routes/listingsRouter.ts", function() {
   let listing: ListingDocument;
 
   beforeEach(async function() {
-    admin = await Mongoose.User.mock();
-    listing = await Mongoose.Listing.mock({ ownerId: admin._id });
+    admin = await User.mock();
+    listing = await Listing.mock({ ownerId: admin._id });
   });
 
   describe("GET /listings", function() {

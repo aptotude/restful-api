@@ -1,4 +1,4 @@
-import { Mongoose, ContactDocument, UserDocument } from "../index";
+import { Contact, ContactDocument, UserDocument } from "../index";
 import { Permissions } from "./permissions";
 
 export class ContactPermissions extends Permissions {
@@ -6,7 +6,7 @@ export class ContactPermissions extends Permissions {
   constructor() {
     super();
 
-    this.Model = Mongoose.Contact;
+    this.Model = Contact;
   }
 
   public async createPermissions(user: UserDocument): Promise<string[]> {

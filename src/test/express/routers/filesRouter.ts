@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { Chance } from "chance";
 
-import { Mongoose, UserDocument, FileDocument } from "../../../mongoose";
+import { File, FileDocument, User, UserDocument } from "../../../mongoose";
 import { ApiHelper } from "../apiHelper";
 
 const index = require("../../");
 
-const apiHelper = new ApiHelper(index.config);
+const apiHelper = new ApiHelper();
 const chance = new Chance();
 
 describe("express/routes/filesRouter.ts", function() {
@@ -14,8 +14,8 @@ describe("express/routes/filesRouter.ts", function() {
   let file: FileDocument;
 
   beforeEach(async function() {
-    admin = await Mongoose.User.mock();
-    file = await Mongoose.File.mock({ ownerId: admin._id });
+    admin = await User.mock();
+    file = await File.mock({ ownerId: admin._id });
   });
 
   describe("GET /files", function() {

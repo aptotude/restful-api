@@ -1,13 +1,13 @@
 import * as express from "express";
 
-import { Mongoose, ContactGroupDocument, ContactGroupPermissions } from "../../mongoose";
+import { ContactGroup, ContactGroupDocument, ContactGroupPermissions } from "../../mongoose";
 import { RestController } from "./";
 
 export class ContactGroupsController {
   private restController: RestController;
 
   constructor() {
-    this.restController = new RestController(Mongoose.ContactGroup, new ContactGroupPermissions());
+    this.restController = new RestController(ContactGroup, new ContactGroupPermissions());
   }
 
   public async count(req: express.Request, res?: express.Response): Promise<{ count: number }> {

@@ -1,6 +1,5 @@
 import * as express from "express";
 
-import { Mongoose } from "../../mongoose";
 import {
     CompsController,
     CompaniesController,

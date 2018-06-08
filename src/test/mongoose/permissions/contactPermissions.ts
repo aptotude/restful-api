@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, ContactDocument, ContactPermissions, Contact } from "../../../mongoose";
+import { Contact, ContactDocument, ContactPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new ContactPermissions();
 describe("mongoose/permissions/contactPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         address: chance.hash(),
         companyId: chance.hash(),
@@ -54,7 +54,7 @@ describe("mongoose/permissions/contactPermissions.ts", function() {
     let record: ContactDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Contact.mock({
+      record = await Contact.mock({
         address: chance.hash(),
         companyId: chance.hash(),
         description: chance.hash(),
@@ -74,7 +74,7 @@ describe("mongoose/permissions/contactPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <ContactDocument> await permissions.read(record, user);
 
@@ -100,11 +100,11 @@ describe("mongoose/permissions/contactPermissions.ts", function() {
     let record: ContactDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Contact.mock();
+      record = await Contact.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <ContactDocument> await permissions.remove(record, user);
 
@@ -116,11 +116,11 @@ describe("mongoose/permissions/contactPermissions.ts", function() {
     let record: ContactDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Contact.mock();
+      record = await Contact.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         address: chance.hash(),
         companyId: chance.hash(),
@@ -161,7 +161,7 @@ describe("mongoose/permissions/contactPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

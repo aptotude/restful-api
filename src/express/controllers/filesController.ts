@@ -1,13 +1,13 @@
 import * as express from "express";
 
-import { Mongoose, FileDocument, FilePermissions } from "../../mongoose";
+import { File, FileDocument, FilePermissions } from "../../mongoose";
 import { RestController } from "./";
 
 export class FilesController {
   private restController: RestController;
 
   constructor() {
-    this.restController = new RestController(Mongoose.File, new FilePermissions());
+    this.restController = new RestController(File, new FilePermissions());
   }
 
   public async count(req: express.Request, res?: express.Response): Promise<{ count: number }> {

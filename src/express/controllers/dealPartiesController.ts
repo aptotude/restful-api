@@ -1,13 +1,13 @@
 import * as express from "express";
 
-import { Mongoose, DealPartyDocument, DealPartyPermissions } from "../../mongoose";
+import { DealParty, DealPartyDocument, DealPartyPermissions } from "../../mongoose";
 import { RestController } from "./";
 
 export class DealPartiesController {
   private restController: RestController;
 
   constructor() {
-    this.restController = new RestController(Mongoose.DealParty, new DealPartyPermissions());
+    this.restController = new RestController(DealParty, new DealPartyPermissions());
   }
 
   public async count(req: express.Request, res?: express.Response): Promise<{ count: number }> {

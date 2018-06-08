@@ -2,7 +2,6 @@ import * as express from "express";
 import * as http from "http";
 import * as socketIo from "socket.io";
 
-import { UserDocument } from "../mongoose";
 import { AuthenticationRouter, Socket, SocketManager } from "./";
 
 export class SocketIo {

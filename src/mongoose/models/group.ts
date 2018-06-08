@@ -1,8 +1,7 @@
 import { Chance } from "chance";
 import * as mongoose from "mongoose";
 
-import { Config } from "../../config";
-import { Mongoose, UserDocument } from "../";
+import { User, UserDocument } from "../";
 
 export interface GroupDocument extends mongoose.Document {
   [key: string]: any;
@@ -19,56 +18,36 @@ export interface GroupModel extends mongoose.Model<GroupDocument> {
   mock(params?: any): Promise<GroupDocument>;
 }
 
-export class Group {
-  public model: GroupModel;
-  private schema: mongoose.Schema;
+const schema = new mongoose.Schema({
+  isPrivate: {
+    default: false,
+    type: Boolean
+  },
+  name: String,
+  ownerId: {
+    required: true,
+    type: mongoose.Schema.Types.ObjectId
+  },
+  userIds: [mongoose.Schema.Types.ObjectId]
+}, {
+  autoIndex: false,
+  timestamps: true
+});
 
-  constructor(config: Config) {
-    this.setupSchema(config);
-    this.model = mongoose.model<GroupDocument, GroupModel>("Group", this.schema);
+/**
+ * Creates a record with randomized required parameters if not specified.
+ * @param {Object} params The parameters to initialize the record with.
+ */
+schema.statics.mock = async function(params?: any): Promise<GroupDocument> {
+  const chance = new Chance();
+
+  params = params || {};
+  if (!params.ownerId) {
+    const user = await User.mock();
+    params.ownerId = user._id;
   }
 
-  private setupSchema(config: Config) {
-    this.schema = new mongoose.Schema({
-      isPrivate: {
-        default: false,
-        type: Boolean
-      },
-      name: String,
-      ownerId: {
-        required: true,
-        type: mongoose.Schema.Types.ObjectId
-      },
-      userIds: [mongoose.Schema.Types.ObjectId]
-    }, {
-      autoIndex: false,
-      timestamps: true
-    });
+  return this.create(params);
+};
 
-    this.setupSchemaMiddleware(config);
-    this.setupSchemaStaticMethods(config);
-    this.setupSchemaInstanceMethods(config);
-  }
-
-  private setupSchemaInstanceMethods(config: Config) { }
-
-  private setupSchemaMiddleware(config: Config) { }
-
-  private setupSchemaStaticMethods(config: Config) {
-    /**
-     * Creates a record with randomized required parameters if not specified.
-     * @param {Object} params The parameters to initialize the record with.
-     */
-    this.schema.statics.mock = async function(params?: any): Promise<GroupDocument> {
-      const chance = new Chance();
-
-      params = params || {};
-      if (!params.ownerId) {
-        const user = await Mongoose.User.mock();
-        params.ownerId = user._id;
-      }
-
-      return this.create(params);
-    };
-  }
-}
+export const Group = mongoose.model<GroupDocument, GroupModel>("Group", schema);

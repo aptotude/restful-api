@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, PropertyDocument, PropertyPermissions, Property } from "../../../mongoose";
+import { Property, PropertyDocument, PropertyPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new PropertyPermissions();
 describe("mongoose/permissions/propertyPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         addressString: chance.hash(),
         buildingLocation: chance.hash(),
@@ -104,7 +104,7 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
     let record: PropertyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Property.mock({
+      record = await Property.mock({
         addressString: chance.hash(),
         buildingLocation: chance.hash(),
         category: chance.hash(),
@@ -149,7 +149,7 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <PropertyDocument> await permissions.read(record, user);
 
@@ -200,11 +200,11 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
     let record: PropertyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Property.mock();
+      record = await Property.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <PropertyDocument> await permissions.remove(record, user);
 
@@ -216,11 +216,11 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
     let record: PropertyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Property.mock();
+      record = await Property.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         addressString: chance.hash(),
         buildingLocation: chance.hash(),
@@ -311,7 +311,7 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

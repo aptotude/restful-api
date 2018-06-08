@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, OwnershipDocument, OwnershipPermissions } from "../../../mongoose";
+import { Ownership, OwnershipDocument, OwnershipPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new OwnershipPermissions();
 describe("mongoose/permissions/ownershipPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         companyId: chance.hash(),
         companyIdFromTrigger: chance.hash(),
@@ -36,7 +36,7 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
     let record: OwnershipDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Ownership.mock({
+      record = await Ownership.mock({
         companyId: chance.hash(),
         companyIdFromTrigger: chance.hash(),
         contactId: chance.hash(),
@@ -47,7 +47,7 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <OwnershipDocument> await permissions.read(record, user);
 
@@ -64,11 +64,11 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
     let record: OwnershipDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Ownership.mock();
+      record = await Ownership.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <OwnershipDocument> await permissions.remove(record, user);
 
@@ -80,11 +80,11 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
     let record: OwnershipDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Ownership.mock();
+      record = await Ownership.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         companyId: chance.hash(),
         companyIdFromTrigger: chance.hash(),
@@ -107,7 +107,7 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

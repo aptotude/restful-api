@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, OfferDocument, OfferPermissions } from "../../../mongoose";
+import { Offer, OfferDocument, OfferPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new OfferPermissions();
 describe("mongoose/permissions/offerPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         additionalDeposit: chance.hash(),
         closeDate: chance.hash(),
@@ -50,7 +50,7 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
     let record: OfferDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Offer.mock({
+      record = await Offer.mock({
         additionalDeposit: chance.hash(),
         closeDate: chance.hash(),
         contractId: chance.hash(),
@@ -68,7 +68,7 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <OfferDocument> await permissions.read(record, user);
 
@@ -92,11 +92,11 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
     let record: OfferDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Offer.mock();
+      record = await Offer.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <OfferDocument> await permissions.remove(record, user);
 
@@ -108,11 +108,11 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
     let record: OfferDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Offer.mock();
+      record = await Offer.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         additionalDeposit: chance.hash(),
         closeDate: chance.hash(),
@@ -149,7 +149,7 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

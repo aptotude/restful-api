@@ -1,18 +1,18 @@
 import { expect } from "chai";
 import * as nock from "nock";
 
-import { Mongoose, UserDocument, TokenDocument } from "../../../mongoose";
+import { User, UserDocument, TokenDocument } from "../../../mongoose";
 import { ApiHelper } from "../apiHelper";
 
 const index = require("../../");
 
-const apiHelper = new ApiHelper(index.config);
+const apiHelper = new ApiHelper();
 
 describe("express/routes/authenticationRouter.ts", function() {
   let user: UserDocument;
 
   beforeEach(async function() {
-    user = await Mongoose.User.mock();
+    user = await User.mock();
   });
 
   describe("GET /authentication/availability", function() {
@@ -46,7 +46,7 @@ describe("express/routes/authenticationRouter.ts", function() {
 
   describe("POST /authentication/login", function() {
     beforeEach(async function() {
-      user = await Mongoose.User.mock({ password: "password" });
+      user = await User.mock({ password: "password" });
     });
 
     it("returns a success response", async function() {

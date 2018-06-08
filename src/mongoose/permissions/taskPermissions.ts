@@ -1,4 +1,4 @@
-import { Mongoose, TaskDocument, UserDocument } from "../index";
+import { Task, TaskDocument, UserDocument } from "../index";
 import { Permissions } from "./permissions";
 
 export class TaskPermissions extends Permissions {
@@ -6,7 +6,7 @@ export class TaskPermissions extends Permissions {
   constructor() {
     super();
 
-    this.Model = Mongoose.Task;
+    this.Model = Task;
   }
 
   public async createPermissions(user: UserDocument): Promise<string[]> {

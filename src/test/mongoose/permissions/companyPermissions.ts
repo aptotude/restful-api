@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, CompanyDocument, CompanyPermissions, Company } from "../../../mongoose";
+import { Company, CompanyDocument, CompanyPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new CompanyPermissions();
 describe("mongoose/permissions/companyPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         billingAddress: chance.hash(),
         category: chance.hash(),
@@ -44,7 +44,7 @@ describe("mongoose/permissions/companyPermissions.ts", function() {
     let record: CompanyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Company.mock({
+      record = await Company.mock({
         billingAddress: chance.hash(),
         category: chance.hash(),
         description: chance.hash(),
@@ -59,7 +59,7 @@ describe("mongoose/permissions/companyPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <CompanyDocument> await permissions.read(record, user);
 
@@ -80,11 +80,11 @@ describe("mongoose/permissions/companyPermissions.ts", function() {
     let record: CompanyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Company.mock();
+      record = await Company.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <CompanyDocument> await permissions.remove(record, user);
 
@@ -96,11 +96,11 @@ describe("mongoose/permissions/companyPermissions.ts", function() {
     let record: CompanyDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Company.mock();
+      record = await Company.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         billingAddress: chance.hash(),
         category: chance.hash(),
@@ -131,7 +131,7 @@ describe("mongoose/permissions/companyPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

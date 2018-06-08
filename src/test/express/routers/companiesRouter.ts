@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { Chance } from "chance";
 
-import { Mongoose, UserDocument, CompanyDocument } from "../../../mongoose";
+import { Company, CompanyDocument, User, UserDocument } from "../../../mongoose";
 import { ApiHelper } from "../apiHelper";
 
 const index = require("../../");
 
-const apiHelper = new ApiHelper(index.config);
+const apiHelper = new ApiHelper();
 const chance = new Chance();
 
 describe("express/routes/companiesRouter.ts", function() {
@@ -14,8 +14,8 @@ describe("express/routes/companiesRouter.ts", function() {
   let company: CompanyDocument;
 
   beforeEach(async function() {
-    admin = await Mongoose.User.mock();
-    company = await Mongoose.Company.mock({ ownerId: admin._id });
+    admin = await User.mock();
+    company = await Company.mock({ ownerId: admin._id });
   });
 
   describe("GET /companies", function() {

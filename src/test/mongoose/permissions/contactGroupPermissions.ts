@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, ContactGroupDocument, ContactGroupPermissions, ContactGroup } from "../../../mongoose";
+import { ContactGroup, ContactGroupDocument, ContactGroupPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new ContactGroupPermissions();
 describe("mongoose/permissions/contactGroupPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         createdDate: chance.hash(),
         name: chance.hash(),
@@ -30,7 +30,7 @@ describe("mongoose/permissions/contactGroupPermissions.ts", function() {
     let record: ContactGroupDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.ContactGroup.mock({
+      record = await ContactGroup.mock({
         createdDate: chance.hash(),
         name: chance.hash(),
         numberOfMembers: chance.integer()
@@ -38,7 +38,7 @@ describe("mongoose/permissions/contactGroupPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <ContactGroupDocument> await permissions.read(record, user);
 
@@ -52,11 +52,11 @@ describe("mongoose/permissions/contactGroupPermissions.ts", function() {
     let record: ContactGroupDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.ContactGroup.mock();
+      record = await ContactGroup.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <ContactGroupDocument> await permissions.remove(record, user);
 
@@ -68,11 +68,11 @@ describe("mongoose/permissions/contactGroupPermissions.ts", function() {
     let record: ContactGroupDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.ContactGroup.mock();
+      record = await ContactGroup.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         createdDate: chance.hash(),
         name: chance.hash(),
@@ -89,7 +89,7 @@ describe("mongoose/permissions/contactGroupPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

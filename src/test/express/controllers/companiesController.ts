@@ -3,7 +3,7 @@ import { Chance } from "chance";
 import * as express from "express";
 
 import { CompaniesController } from "../../../express";
-import { Mongoose, UserDocument, CompanyDocument } from "../../../mongoose";
+import { Company, CompanyDocument, User, UserDocument } from "../../../mongoose";
 
 const index = require("../../");
 
@@ -15,8 +15,8 @@ describe("express/controllers/companiesController.ts", function() {
   let user: UserDocument;
 
   beforeEach(async function() {
-    user = await Mongoose.User.mock();
-    company = await Mongoose.Company.mock({ ownerId: user._id });
+    user = await User.mock();
+    company = await Company.mock({ ownerId: user._id });
   });
 
   describe("count()", function() {

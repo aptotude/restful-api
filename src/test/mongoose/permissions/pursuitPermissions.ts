@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Mongoose, PursuitDocument, PursuitPermissions } from "../../../mongoose";
+import { Pursuit, PursuitDocument, PursuitPermissions, User } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -11,7 +11,7 @@ const permissions = new PursuitPermissions();
 describe("mongoose/permissions/pursuitPermissions.ts", function() {
   describe("create()", function() {
     it("creates a new record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         brokerProposedPrice: chance.integer(),
         clientCompanyId: chance.hash(),
@@ -50,7 +50,7 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
     let record: PursuitDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Pursuit.mock({
+      record = await Pursuit.mock({
         brokerProposedPrice: chance.integer(),
         clientCompanyId: chance.hash(),
         clientContactId: chance.hash(),
@@ -68,7 +68,7 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <PursuitDocument> await permissions.read(record, user);
 
@@ -92,11 +92,11 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
     let record: PursuitDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Pursuit.mock();
+      record = await Pursuit.mock();
     });
 
     it("returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
 
       record = <PursuitDocument> await permissions.remove(record, user);
 
@@ -108,11 +108,11 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
     let record: PursuitDocument;
 
     beforeEach(async function() {
-      record = await Mongoose.Pursuit.mock();
+      record = await Pursuit.mock();
     });
 
     it("updates and returns the record", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {
         brokerProposedPrice: chance.integer(),
         clientCompanyId: chance.hash(),
@@ -149,7 +149,7 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
 
   describe("where()", function() {
     it("returns a valid where query", async function() {
-      const user = await Mongoose.User.mock();
+      const user = await User.mock();
       const params = {};
 
       const query = await permissions.where(params, user);

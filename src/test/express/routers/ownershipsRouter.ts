@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { Chance } from "chance";
 
-import { Mongoose, UserDocument, OwnershipDocument } from "../../../mongoose";
+import { Ownership, OwnershipDocument, User, UserDocument } from "../../../mongoose";
 import { ApiHelper } from "../apiHelper";
 
 const index = require("../../");
 
-const apiHelper = new ApiHelper(index.config);
+const apiHelper = new ApiHelper();
 const chance = new Chance();
 
 describe("express/routes/ownershipsRouter.ts", function() {
@@ -14,8 +14,8 @@ describe("express/routes/ownershipsRouter.ts", function() {
   let ownership: OwnershipDocument;
 
   beforeEach(async function() {
-    admin = await Mongoose.User.mock();
-    ownership = await Mongoose.Ownership.mock({ ownerId: admin._id });
+    admin = await User.mock();
+    ownership = await Ownership.mock({ ownerId: admin._id });
   });
 
   describe("GET /ownerships", function() {

@@ -1,13 +1,13 @@
 import * as express from "express";
 
-import { Mongoose, TaskDocument, TaskPermissions } from "../../mongoose";
+import { Task, TaskDocument, TaskPermissions } from "../../mongoose";
 import { RestController } from "./";
 
 export class TasksController {
   private restController: RestController;
 
   constructor() {
-    this.restController = new RestController(Mongoose.Task, new TaskPermissions());
+    this.restController = new RestController(Task, new TaskPermissions());
   }
 
   public async count(req: express.Request, res?: express.Response): Promise<{ count: number }> {

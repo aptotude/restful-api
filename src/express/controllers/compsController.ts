@@ -1,13 +1,13 @@
 import * as express from "express";
 
-import { Mongoose, CompDocument, CompPermissions } from "../../mongoose";
+import { Comp, CompDocument, CompPermissions } from "../../mongoose";
 import { RestController } from "./";
 
 export class CompsController {
   private restController: RestController;
 
   constructor() {
-    this.restController = new RestController(Mongoose.Comp, new CompPermissions());
+    this.restController = new RestController(Comp, new CompPermissions());
   }
 
   public async count(req: express.Request, res?: express.Response): Promise<{ count: number }> {

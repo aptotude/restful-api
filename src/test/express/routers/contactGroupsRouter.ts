@@ -1,12 +1,12 @@
 import { expect } from "chai";
 import { Chance } from "chance";
 
-import { Mongoose, UserDocument, ContactGroupDocument } from "../../../mongoose";
+import { ContactGroup, ContactGroupDocument, User, UserDocument } from "../../../mongoose";
 import { ApiHelper } from "../apiHelper";
 
 const index = require("../../");
 
-const apiHelper = new ApiHelper(index.config);
+const apiHelper = new ApiHelper();
 const chance = new Chance();
 
 describe("express/routes/contactGroupsRouter.ts", function() {
@@ -14,8 +14,8 @@ describe("express/routes/contactGroupsRouter.ts", function() {
   let contactGroup: ContactGroupDocument;
 
   beforeEach(async function() {
-    admin = await Mongoose.User.mock();
-    contactGroup = await Mongoose.ContactGroup.mock({ ownerId: admin._id });
+    admin = await User.mock();
+    contactGroup = await ContactGroup.mock({ ownerId: admin._id });
   });
 
   describe("GET /contact-groups", function() {

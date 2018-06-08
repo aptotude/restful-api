@@ -1,4 +1,4 @@
-import { Mongoose, PursuitDocument, UserDocument } from "../index";
+import { Pursuit, PursuitDocument, UserDocument } from "../index";
 import { Permissions } from "./permissions";
 
 export class PursuitPermissions extends Permissions {
@@ -6,7 +6,7 @@ export class PursuitPermissions extends Permissions {
   constructor() {
     super();
 
-    this.Model = Mongoose.Pursuit;
+    this.Model = Pursuit;
   }
 
   public async createPermissions(user: UserDocument): Promise<string[]> {

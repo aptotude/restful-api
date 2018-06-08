@@ -1,8 +1,7 @@
 import { Chance } from "chance";
 import * as mongoose from "mongoose";
 
-import { Config } from "../../config";
-import { Mongoose, AddressModel, ContactDocument, PhoneNumberModel } from "../";
+import { AddressModel, ContactDocument, PhoneNumberModel } from "../";
 
 export interface WebsiteModel {
   label?: string;
@@ -29,55 +28,35 @@ export interface CompanyModel extends mongoose.Model<CompanyDocument> {
   mock(params?: any): Promise<CompanyDocument>;
 }
 
-export class Company {
-  public model: CompanyModel;
-  private schema: mongoose.Schema;
+const schema = new mongoose.Schema({
+  billingAddress: mongoose.Schema.Types.Mixed,
+  category: String,
+  description: String,
+  fax: mongoose.Schema.Types.Mixed,
+  name: String,
+  numberOfEmployees: Number,
+  ownerId: {
+    ref: "User",
+    type: mongoose.Schema.Types.ObjectId
+  },
+  phone: mongoose.Schema.Types.Mixed,
+  shippingAddress: mongoose.Schema.Types.Mixed,
+  type: String,
+  website: mongoose.Schema.Types.Mixed
+}, {
+  autoIndex: false,
+  timestamps: true
+});
 
-  constructor(config: Config) {
-    this.setupSchema(config);
-    this.model = mongoose.model<CompanyDocument, CompanyModel>("Company", this.schema);
-  }
+/**
+ * Creates a record with randomized required parameters if not specified.
+ * @param {Object} params The parameters to initialize the record with.
+ */
+schema.statics.mock = async function(params?: any): Promise<CompanyDocument> {
+  const chance = new Chance();
 
-  private setupSchema(config: Config) {
-    this.schema = new mongoose.Schema({
-      billingAddress: mongoose.Schema.Types.Mixed,
-      category: String,
-      description: String,
-      fax: mongoose.Schema.Types.Mixed,
-      name: String,
-      numberOfEmployees: Number,
-      ownerId: {
-        ref: "User",
-        type: mongoose.Schema.Types.ObjectId
-      },
-      phone: mongoose.Schema.Types.Mixed,
-      shippingAddress: mongoose.Schema.Types.Mixed,
-      type: String,
-      website: mongoose.Schema.Types.Mixed
-    }, {
-      autoIndex: false,
-      timestamps: true
-    });
+  params = params || {};
+  return this.create(params);
+};
 
-    this.setupSchemaMiddleware(config);
-    this.setupSchemaStaticMethods(config);
-    this.setupSchemaInstanceMethods(config);
-  }
-
-  private setupSchemaInstanceMethods(config: Config) { }
-
-  private setupSchemaMiddleware(config: Config) { }
-
-  private setupSchemaStaticMethods(config: Config) {
-    /**
-     * Creates a record with randomized required parameters if not specified.
-     * @param {Object} params The parameters to initialize the record with.
-     */
-    this.schema.statics.mock = async function(params?: any): Promise<CompanyDocument> {
-      const chance = new Chance();
-
-      params = params || {};
-      return this.create(params);
-    };
-  }
-}
+export const Company = mongoose.model<CompanyDocument, CompanyModel>("Company", schema);

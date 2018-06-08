@@ -1,4 +1,4 @@
-import { Mongoose, DealPartyDocument, UserDocument } from "../index";
+import { DealParty, DealPartyDocument, UserDocument } from "../index";
 import { Permissions } from "./permissions";
 
 export class DealPartyPermissions extends Permissions {
@@ -6,7 +6,7 @@ export class DealPartyPermissions extends Permissions {
   constructor() {
     super();
 
-    this.Model = Mongoose.DealParty;
+    this.Model = DealParty;
   }
 
   public async createPermissions(user: UserDocument): Promise<string[]> {

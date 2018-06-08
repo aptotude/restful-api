@@ -1,4 +1,4 @@
-import { Mongoose, CompDocument, UserDocument } from "../index";
+import { Comp, CompDocument, UserDocument } from "../index";
 import { Permissions } from "./permissions";
 
 export class CompPermissions extends Permissions {
@@ -6,7 +6,7 @@ export class CompPermissions extends Permissions {
   constructor() {
     super();
 
-    this.Model = Mongoose.Comp;
+    this.Model = Comp;
   }
 
   public async createPermissions(user: UserDocument): Promise<string[]> {

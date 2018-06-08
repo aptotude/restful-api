@@ -3,7 +3,7 @@ import { Chance } from "chance";
 import * as express from "express";
 
 import { SearchController } from "../../../express";
-import { Mongoose, UserDocument, PropertyDocument } from "../../../mongoose";
+import { Property, PropertyDocument, User, UserDocument } from "../../../mongoose";
 
 const index = require("../../");
 
@@ -15,8 +15,8 @@ describe("express/controllers/searchController.ts", function() {
     let user: UserDocument;
 
     beforeEach(async function() {
-        user = await Mongoose.User.mock();
-        property = await Mongoose.Property.mock({ name: chance.hash(), ownerId: user._id });
+        user = await User.mock();
+        property = await Property.mock({ name: chance.hash(), ownerId: user._id });
     });
 
     describe("search()", function() {

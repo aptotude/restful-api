@@ -1,9 +1,6 @@
 import { Chance } from "chance";
 import * as mongoose from "mongoose";
 
-import { Config } from "../../config";
-import { Mongoose, CompanyDocument } from "../";
-
 export interface AddressModel {
   label?: string;
   city?: string;
@@ -54,62 +51,42 @@ export interface ContactModel extends mongoose.Model<ContactDocument> {
   mock(params?: any): Promise<ContactDocument>;
 }
 
-export class Contact {
-  public model: ContactModel;
-  private schema: mongoose.Schema;
+const schema = new mongoose.Schema({
+  address: mongoose.Schema.Types.Mixed,
+  companyId: String,
+  description: String,
+  email: mongoose.Schema.Types.Mixed,
+  email2: mongoose.Schema.Types.Mixed,
+  fax: mongoose.Schema.Types.Mixed,
+  firstName: String,
+  fullName: String,
+  homePhone: mongoose.Schema.Types.Mixed,
+  lastName: String,
+  mobilePhone: mongoose.Schema.Types.Mixed,
+  otherPhone: mongoose.Schema.Types.Mixed,
+  ownerId: {
+    ref: "User",
+    type: mongoose.Schema.Types.ObjectId
+  },
+  phone: mongoose.Schema.Types.Mixed,
+  recordTypeId: String,
+  selectedCompany: mongoose.Schema.Types.Mixed,
+  title: String,
+  type: String
+}, {
+  autoIndex: false,
+  timestamps: true
+});
 
-  constructor(config: Config) {
-    this.setupSchema(config);
-    this.model = mongoose.model<ContactDocument, ContactModel>("Contact", this.schema);
-  }
+/**
+ * Creates a record with randomized required parameters if not specified.
+ * @param {Object} params The parameters to initialize the record with.
+ */
+schema.statics.mock = async function(params?: any): Promise<ContactDocument> {
+  const chance = new Chance();
 
-  private setupSchema(config: Config) {
-    this.schema = new mongoose.Schema({
-      address: mongoose.Schema.Types.Mixed,
-      companyId: String,
-      description: String,
-      email: mongoose.Schema.Types.Mixed,
-      email2: mongoose.Schema.Types.Mixed,
-      fax: mongoose.Schema.Types.Mixed,
-      firstName: String,
-      fullName: String,
-      homePhone: mongoose.Schema.Types.Mixed,
-      lastName: String,
-      mobilePhone: mongoose.Schema.Types.Mixed,
-      otherPhone: mongoose.Schema.Types.Mixed,
-      ownerId: {
-        ref: "User",
-        type: mongoose.Schema.Types.ObjectId
-      },
-      phone: mongoose.Schema.Types.Mixed,
-      recordTypeId: String,
-      selectedCompany: mongoose.Schema.Types.Mixed,
-      title: String,
-      type: String
-    }, {
-      autoIndex: false,
-      timestamps: true
-    });
+  params = params || {};
+  return this.create(params);
+};
 
-    this.setupSchemaMiddleware(config);
-    this.setupSchemaStaticMethods(config);
-    this.setupSchemaInstanceMethods(config);
-  }
-
-  private setupSchemaInstanceMethods(config: Config) { }
-
-  private setupSchemaMiddleware(config: Config) { }
-
-  private setupSchemaStaticMethods(config: Config) {
-    /**
-     * Creates a record with randomized required parameters if not specified.
-     * @param {Object} params The parameters to initialize the record with.
-     */
-    this.schema.statics.mock = async function(params?: any): Promise<ContactDocument> {
-      const chance = new Chance();
-
-      params = params || {};
-      return this.create(params);
-    };
-  }
-}
+export const Contact = mongoose.model<ContactDocument, ContactModel>("Contact", schema);

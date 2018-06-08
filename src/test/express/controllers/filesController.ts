@@ -3,7 +3,7 @@ import { Chance } from "chance";
 import * as express from "express";
 
 import { FilesController } from "../../../express";
-import { Mongoose, UserDocument, FileDocument } from "../../../mongoose";
+import { File, FileDocument, User, UserDocument } from "../../../mongoose";
 
 const index = require("../../");
 
@@ -15,8 +15,8 @@ describe("express/controllers/filesController.ts", function() {
   let user: UserDocument;
 
   beforeEach(async function() {
-    user = await Mongoose.User.mock();
-    file = await Mongoose.File.mock({ ownerId: user._id });
+    user = await User.mock();
+    file = await File.mock({ ownerId: user._id });
   });
 
   describe("count()", function() {

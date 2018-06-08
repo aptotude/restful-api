@@ -1,13 +1,13 @@
 import * as express from "express";
 
-import { Mongoose, OwnershipDocument, OwnershipPermissions } from "../../mongoose";
+import { Ownership, OwnershipDocument, OwnershipPermissions } from "../../mongoose";
 import { RestController } from "./";
 
 export class OwnershipsController {
   private restController: RestController;
 
   constructor() {
-    this.restController = new RestController(Mongoose.Ownership, new OwnershipPermissions());
+    this.restController = new RestController(Ownership, new OwnershipPermissions());
   }
 
   public async count(req: express.Request, res?: express.Response): Promise<{ count: number }> {
