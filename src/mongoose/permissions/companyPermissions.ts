@@ -34,45 +34,53 @@ export class CompanyPermissions extends Permissions {
   }
 
   public async readPermissions(record: CompanyDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "billingAddress",
-      "category",
-      "contacts",
-      "createdAt",
-      "description",
-      "fax",
-      "name",
-      "numberOfEmployees",
-      "ownerId",
-      "phone",
-      "shippingAddress",
-      "type",
-      "updatedAt",
-      "website"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "billingAddress",
+        "category",
+        "contacts",
+        "createdAt",
+        "description",
+        "fax",
+        "name",
+        "numberOfEmployees",
+        "ownerId",
+        "phone",
+        "shippingAddress",
+        "type",
+        "updatedAt",
+        "website"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: CompanyDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: CompanyDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "billingAddress",
-      "category",
-      "contacts",
-      "description",
-      "fax",
-      "name",
-      "numberOfEmployees",
-      "phone",
-      "shippingAddress",
-      "type",
-      "website"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "billingAddress",
+        "category",
+        "contacts",
+        "description",
+        "fax",
+        "name",
+        "numberOfEmployees",
+        "phone",
+        "shippingAddress",
+        "type",
+        "website"
+      );
+    }
 
     return attributes;
   }

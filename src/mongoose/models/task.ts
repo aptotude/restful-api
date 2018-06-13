@@ -12,7 +12,7 @@ export interface TaskDocument extends mongoose.Document {
   isComplete?: boolean;
   lastModifiedDate?: string;
   marketingStatus?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   ownerName?: string;
   priority?: string;
   status?: string;
@@ -49,6 +49,12 @@ const schema = new mongoose.Schema({
 }, {
   autoIndex: false,
   timestamps: true
+});
+
+schema.pre("save", function(next: any) {
+  this.status = this.isComplete ? "Completed" : "Incomplete";
+
+  return next();
 });
 
 /**

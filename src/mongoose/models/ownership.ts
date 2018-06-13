@@ -9,7 +9,7 @@ export interface OwnershipDocument extends mongoose.Document {
   contactId?: string;
   contactRole?: string;
   isPrimaryContact?: boolean;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   propertyId?: string;
 }
 

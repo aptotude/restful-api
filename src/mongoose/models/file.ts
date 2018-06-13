@@ -11,7 +11,7 @@ export interface FileDocument extends mongoose.Document {
   isPublic?: boolean;
   listingId?: string;
   name?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   pursuitId?: string;
 }
 

@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Property, PropertyDocument, PropertyPermissions, User } from "../../../mongoose";
+import { Property, PropertyDocument, PropertyPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -55,7 +55,7 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
         zoning: chance.hash()
       };
 
-      const record = <PropertyDocument> await permissions.create(params, {}, user);
+      const record = <PropertyDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.addressString).to.eql(params.addressString);
       expect(record.buildingLocation).to.eql(params.buildingLocation);
@@ -102,8 +102,10 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
 
   describe("read()", function() {
     let record: PropertyDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
+      user = await User.mock();
       record = await Property.mock({
         addressString: chance.hash(),
         buildingLocation: chance.hash(),
@@ -124,6 +126,7 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
         market: chance.hash(),
         name: chance.hash(),
         occupancy: chance.hash(),
+        ownerId: user._id,
         parcelNumber: chance.hash(),
         parkingRatio: chance.hash(),
         parkingSpaces: chance.hash(),
@@ -149,8 +152,6 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <PropertyDocument> await permissions.read(record, user);
 
       expect(record.addressString).to.exist;
@@ -198,14 +199,14 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
 
   describe("remove()", function() {
     let record: PropertyDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Property.mock();
+      user = await User.mock();
+      record = await Property.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <PropertyDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -214,13 +215,14 @@ describe("mongoose/permissions/propertyPermissions.ts", function() {
 
   describe("update()", function() {
     let record: PropertyDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Property.mock();
+      user = await User.mock();
+      record = await Property.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         addressString: chance.hash(),
         buildingLocation: chance.hash(),

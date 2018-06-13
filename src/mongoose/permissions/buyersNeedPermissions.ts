@@ -38,53 +38,61 @@ export class BuyersNeedPermissions extends Permissions {
   }
 
   public async readPermissions(record: BuyersNeedDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "acquisitionType",
-      "buildingType",
-      "buyerQuality",
-      "contactId",
-      "createdAt",
-      "isActive",
-      "market",
-      "maxPrice",
-      "maxSquareFootage",
-      "minCapRate",
-      "minCashOnCash",
-      "minIrr",
-      "minLirr",
-      "minPrice",
-      "minSquareFootage",
-      "name",
-      "ownerId",
-      "updatedAt"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "acquisitionType",
+        "buildingType",
+        "buyerQuality",
+        "contactId",
+        "createdAt",
+        "isActive",
+        "market",
+        "maxPrice",
+        "maxSquareFootage",
+        "minCapRate",
+        "minCashOnCash",
+        "minIrr",
+        "minLirr",
+        "minPrice",
+        "minSquareFootage",
+        "name",
+        "ownerId",
+        "updatedAt"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: BuyersNeedDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: BuyersNeedDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "acquisitionType",
-      "buildingType",
-      "buyerQuality",
-      "contactId",
-      "isActive",
-      "market",
-      "maxPrice",
-      "maxSquareFootage",
-      "minCapRate",
-      "minCashOnCash",
-      "minIrr",
-      "minLirr",
-      "minPrice",
-      "minSquareFootage",
-      "name"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "acquisitionType",
+        "buildingType",
+        "buyerQuality",
+        "contactId",
+        "isActive",
+        "market",
+        "maxPrice",
+        "maxSquareFootage",
+        "minCapRate",
+        "minCashOnCash",
+        "minIrr",
+        "minLirr",
+        "minPrice",
+        "minSquareFootage",
+        "name"
+      );
+    }
 
     return attributes;
   }

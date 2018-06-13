@@ -18,7 +18,7 @@ describe("mongoose/permissions/filePermissions.ts", function() {
         ownerId: user._id
       };
 
-      const record = <FileDocument> await permissions.create(params, {}, user);
+      const record = <FileDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.isPublic).to.eql(params.isPublic);
       expect(record.name).to.eql(params.name);
@@ -31,7 +31,7 @@ describe("mongoose/permissions/filePermissions.ts", function() {
     let user: UserDocument;
 
     beforeEach(async function() {
-      user = user = await User.mock();
+      user = await User.mock();
       record = await File.mock({
         isPublic: chance.bool(),
         name: chance.hash(),
@@ -50,14 +50,14 @@ describe("mongoose/permissions/filePermissions.ts", function() {
 
   describe("remove()", function() {
     let record: FileDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await File.mock();
+      user = await User.mock();
+      record = await File.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <FileDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -66,13 +66,14 @@ describe("mongoose/permissions/filePermissions.ts", function() {
 
   describe("update()", function() {
     let record: FileDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await File.mock();
+      user = await User.mock();
+      record = await File.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         isPublic: chance.bool(),
         name: chance.hash(),

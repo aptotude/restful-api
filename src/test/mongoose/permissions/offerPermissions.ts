@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Offer, OfferDocument, OfferPermissions, User } from "../../../mongoose";
+import { Offer, OfferDocument, OfferPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -28,7 +28,7 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
         status: chance.hash()
       };
 
-      const record = <OfferDocument> await permissions.create(params, {}, user);
+      const record = <OfferDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.additionalDeposit).to.eql(params.additionalDeposit);
       expect(record.closeDate).to.eql(params.closeDate);
@@ -48,8 +48,10 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
 
   describe("read()", function() {
     let record: OfferDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
+      user = await User.mock();
       record = await Offer.mock({
         additionalDeposit: chance.hash(),
         closeDate: chance.hash(),
@@ -62,14 +64,13 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
         name: chance.hash(),
         offerDate: chance.hash(),
         offerPrice: chance.hash(),
+        ownerId: user._id,
         purchaserId: chance.hash(),
         status: chance.hash()
       });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <OfferDocument> await permissions.read(record, user);
 
       expect(record.additionalDeposit).to.exist;
@@ -90,14 +91,14 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
 
   describe("remove()", function() {
     let record: OfferDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Offer.mock();
+      user = await User.mock();
+      record = await Offer.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <OfferDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -106,13 +107,14 @@ describe("mongoose/permissions/offerPermissions.ts", function() {
 
   describe("update()", function() {
     let record: OfferDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Offer.mock();
+      user = await User.mock();
+      record = await Offer.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         additionalDeposit: chance.hash(),
         closeDate: chance.hash(),

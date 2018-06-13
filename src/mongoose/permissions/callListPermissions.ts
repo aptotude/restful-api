@@ -33,40 +33,48 @@ export class CallListPermissions extends Permissions {
     }
 
     public async readPermissions(record: CallListDocument, user: UserDocument): Promise<string[]> {
-        const attributes: string[] = [
-            "_id",
-            "batchInfo",
-            "configJson",
-            "contactGroupId",
-            "contactIds",
-            "description",
-            "dueDate",
-            "name",
-            "ownerId",
-            "sfUserId",
-            "type"
-        ];
+        const attributes: string[] = [];
+
+        if (record.ownerId.equals(user._id)) {
+            attributes.push(
+                "_id",
+                "batchInfo",
+                "configJson",
+                "contactGroupId",
+                "contactIds",
+                "description",
+                "dueDate",
+                "name",
+                "ownerId",
+                "sfUserId",
+                "type"
+            );
+        }
 
         return attributes;
     }
 
     public async removePermissions(record: CallListDocument, user: UserDocument): Promise<boolean> {
-        return true;
+        return record.ownerId.equals(user._id);
     }
 
     public async updatePermissions(record: CallListDocument, user: UserDocument): Promise<string[]> {
-        const attributes: string[] = [
-            "batchInfo",
-            "configJson",
-            "contactGroupId",
-            "contactIds",
-            "description",
-            "dueDate",
-            "name",
-            "ownerId",
-            "sfUserId",
-            "type"
-        ];
+        const attributes: string[] = [];
+
+        if (record.ownerId.equals(user._id)) {
+            attributes.push(
+                "batchInfo",
+                "configJson",
+                "contactGroupId",
+                "contactIds",
+                "description",
+                "dueDate",
+                "name",
+                "ownerId",
+                "sfUserId",
+                "type"
+            );
+        }
 
         return attributes;
     }

@@ -11,7 +11,7 @@ export interface CallListDocument extends mongoose.Document {
     description?: string;
     dueDate?: string;
     name?: string;
-    ownerId?: string;
+    ownerId?: mongoose.Types.ObjectId;
     sfUserId?: string;
     type?: string;
 }

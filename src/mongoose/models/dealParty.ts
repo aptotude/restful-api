@@ -9,7 +9,7 @@ export interface DealPartyDocument extends mongoose.Document {
   contactId?: string;
   contractId?: string;
   listingId?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   pursuitId?: string;
   role?: string;
   sale?: string;

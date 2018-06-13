@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Pursuit, PursuitDocument, PursuitPermissions, User } from "../../../mongoose";
+import { Pursuit, PursuitDocument, PursuitPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -28,7 +28,7 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
         type: chance.hash()
       };
 
-      const record = <PursuitDocument> await permissions.create(params, {}, user);
+      const record = <PursuitDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.brokerProposedPrice).to.eql(params.brokerProposedPrice);
       expect(record.clientCompanyId).to.eql(params.clientCompanyId);
@@ -48,8 +48,10 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
 
   describe("read()", function() {
     let record: PursuitDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
+      user = await User.mock();
       record = await Pursuit.mock({
         brokerProposedPrice: chance.integer(),
         clientCompanyId: chance.hash(),
@@ -58,6 +60,7 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
         createdDate: chance.hash(),
         lastModifiedDate: chance.hash(),
         name: chance.hash(),
+        ownerId: user._id,
         probability: chance.integer(),
         propertyId: chance.hash(),
         recordTypeId: chance.hash(),
@@ -68,8 +71,6 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <PursuitDocument> await permissions.read(record, user);
 
       expect(record.brokerProposedPrice).to.exist;
@@ -90,14 +91,14 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
 
   describe("remove()", function() {
     let record: PursuitDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Pursuit.mock();
+      user = await User.mock();
+      record = await Pursuit.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <PursuitDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -106,13 +107,14 @@ describe("mongoose/permissions/pursuitPermissions.ts", function() {
 
   describe("update()", function() {
     let record: PursuitDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Pursuit.mock();
+      user = await User.mock();
+      record = await Pursuit.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         brokerProposedPrice: chance.integer(),
         clientCompanyId: chance.hash(),

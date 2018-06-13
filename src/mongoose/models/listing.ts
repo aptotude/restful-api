@@ -26,7 +26,7 @@ export interface ListingDocument extends mongoose.Document {
   noi?: string;
   onMarketStatus?: string;
   ownerContact?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   probability?: number;
   propertyId?: string;
   propertyType?: string;

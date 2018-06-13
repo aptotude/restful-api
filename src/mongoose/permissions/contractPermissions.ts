@@ -53,83 +53,91 @@ export class ContractPermissions extends Permissions {
   }
 
   public async readPermissions(record: ContractDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "buyerAttorneyContactId",
-      "buyerCompanyId",
-      "buyerContactId",
-      "buyerLoanContactId",
-      "clientCompanyId",
-      "clientContactId",
-      "commissionAmount",
-      "contractCloseDate",
-      "contractPrice",
-      "createdAt",
-      "createdDate",
-      "deposit",
-      "description",
-      "effectiveDate",
-      "landlordCompanyId",
-      "landlordContactId",
-      "lastModifiedDate",
-      "listingId",
-      "ownerId",
-      "name",
-      "probability",
-      "propertyId",
-      "pursuitId",
-      "recordTypeId",
-      "sellerAttorneyContactId",
-      "sellerCompanyId",
-      "sellerContactId",
-      "status",
-      "tenantCompanyId",
-      "tenantContactId",
-      "titleCompanyAttorneyContactId",
-      "type",
-      "updatedAt"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "buyerAttorneyContactId",
+        "buyerCompanyId",
+        "buyerContactId",
+        "buyerLoanContactId",
+        "clientCompanyId",
+        "clientContactId",
+        "commissionAmount",
+        "contractCloseDate",
+        "contractPrice",
+        "createdAt",
+        "createdDate",
+        "deposit",
+        "description",
+        "effectiveDate",
+        "landlordCompanyId",
+        "landlordContactId",
+        "lastModifiedDate",
+        "listingId",
+        "ownerId",
+        "name",
+        "probability",
+        "propertyId",
+        "pursuitId",
+        "recordTypeId",
+        "sellerAttorneyContactId",
+        "sellerCompanyId",
+        "sellerContactId",
+        "status",
+        "tenantCompanyId",
+        "tenantContactId",
+        "titleCompanyAttorneyContactId",
+        "type",
+        "updatedAt"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: ContractDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: ContractDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "buyerAttorneyContactId",
-      "buyerCompanyId",
-      "buyerContactId",
-      "buyerLoanContactId",
-      "clientCompanyId",
-      "clientContactId",
-      "commissionAmount",
-      "contractCloseDate",
-      "contractPrice",
-      "createdDate",
-      "deposit",
-      "description",
-      "effectiveDate",
-      "landlordCompanyId",
-      "landlordContactId",
-      "lastModifiedDate",
-      "listingId",
-      "name",
-      "probability",
-      "propertyId",
-      "pursuitId",
-      "recordTypeId",
-      "sellerAttorneyContactId",
-      "sellerCompanyId",
-      "sellerContactId",
-      "status",
-      "tenantCompanyId",
-      "tenantContactId",
-      "titleCompanyAttorneyContactId",
-      "type"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "buyerAttorneyContactId",
+        "buyerCompanyId",
+        "buyerContactId",
+        "buyerLoanContactId",
+        "clientCompanyId",
+        "clientContactId",
+        "commissionAmount",
+        "contractCloseDate",
+        "contractPrice",
+        "createdDate",
+        "deposit",
+        "description",
+        "effectiveDate",
+        "landlordCompanyId",
+        "landlordContactId",
+        "lastModifiedDate",
+        "listingId",
+        "name",
+        "probability",
+        "propertyId",
+        "pursuitId",
+        "recordTypeId",
+        "sellerAttorneyContactId",
+        "sellerCompanyId",
+        "sellerContactId",
+        "status",
+        "tenantCompanyId",
+        "tenantContactId",
+        "titleCompanyAttorneyContactId",
+        "type"
+      );
+    }
 
     return attributes;
   }

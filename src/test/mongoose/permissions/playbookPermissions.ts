@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Playbook, PlaybookDocument, PlaybookPermissions, User } from "../../../mongoose";
+import { Playbook, PlaybookDocument, PlaybookPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -17,7 +17,7 @@ describe("mongoose/permissions/playbookPermissions.ts", function() {
                 targetStage: chance.hash()
             };
 
-            const record = <PlaybookDocument> await permissions.create(params, {}, user);
+            const record = <PlaybookDocument> await permissions.create(params, { ownerId: user._id }, user);
 
             expect(record.name).to.eql(params.name);
             expect(record.targetStage).to.eql(params.targetStage);
@@ -26,17 +26,18 @@ describe("mongoose/permissions/playbookPermissions.ts", function() {
 
     describe("read()", function() {
         let record: PlaybookDocument;
+        let user: UserDocument;
 
         beforeEach(async function() {
+            user = await User.mock();
             record = await Playbook.mock({
                 name: chance.hash(),
+                ownerId: user._id,
                 targetStage: chance.hash()
             });
         });
 
         it("returns the record", async function() {
-            const user = await User.mock();
-
             record = <PlaybookDocument> await permissions.read(record, user);
 
             expect(record.name).to.exist;
@@ -46,14 +47,14 @@ describe("mongoose/permissions/playbookPermissions.ts", function() {
 
     describe("remove()", function() {
         let record: PlaybookDocument;
+        let user: UserDocument;
 
         beforeEach(async function() {
-            record = await Playbook.mock();
+            user = await User.mock();
+            record = await Playbook.mock({ ownerId: user._id });
         });
 
         it("returns the record", async function() {
-            const user = await User.mock();
-
             record = <PlaybookDocument> await permissions.remove(record, user);
 
             expect(record).to.exist;
@@ -62,13 +63,14 @@ describe("mongoose/permissions/playbookPermissions.ts", function() {
 
     describe("update()", function() {
         let record: PlaybookDocument;
+        let user: UserDocument;
 
         beforeEach(async function() {
-            record = await Playbook.mock();
+            user = await User.mock();
+            record = await Playbook.mock({ ownerId: user._id });
         });
 
         it("updates and returns the record", async function() {
-            const user = await User.mock();
             const params = {
                 name: chance.hash(),
                 targetStage: chance.hash()

@@ -5,7 +5,7 @@ export interface PlaybookDocument extends mongoose.Document {
     [key: string]: any;
 
     name?: string;
-    ownerId?: string;
+    ownerId?: mongoose.Types.ObjectId;
     targetStage?: string;
     taskTemplates?: any;
 }

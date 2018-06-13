@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Ownership, OwnershipDocument, OwnershipPermissions, User } from "../../../mongoose";
+import { Ownership, OwnershipDocument, OwnershipPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -21,7 +21,7 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
         propertyId: chance.hash()
       };
 
-      const record = <OwnershipDocument> await permissions.create(params, {}, user);
+      const record = <OwnershipDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.companyId).to.eql(params.companyId);
       expect(record.companyIdFromTrigger).to.eql(params.companyIdFromTrigger);
@@ -34,21 +34,22 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
 
   describe("read()", function() {
     let record: OwnershipDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
+      user = await User.mock();
       record = await Ownership.mock({
         companyId: chance.hash(),
         companyIdFromTrigger: chance.hash(),
         contactId: chance.hash(),
         contactRole: chance.hash(),
         isPrimaryContact: chance.bool(),
+        ownerId: user._id,
         propertyId: chance.hash()
       });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <OwnershipDocument> await permissions.read(record, user);
 
       expect(record.companyId).to.exist;
@@ -62,14 +63,14 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
 
   describe("remove()", function() {
     let record: OwnershipDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Ownership.mock();
+      user = await User.mock();
+      record = await Ownership.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <OwnershipDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -78,13 +79,14 @@ describe("mongoose/permissions/ownershipPermissions.ts", function() {
 
   describe("update()", function() {
     let record: OwnershipDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Ownership.mock();
+      user = await User.mock();
+      record = await Ownership.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         companyId: chance.hash(),
         companyIdFromTrigger: chance.hash(),

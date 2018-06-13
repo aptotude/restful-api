@@ -15,7 +15,7 @@ export interface OfferDocument extends mongoose.Document {
   name?: string;
   offerDate?: string;
   offerPrice?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   purchaserId?: string;
   status?: string;
 }

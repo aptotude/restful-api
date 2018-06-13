@@ -11,7 +11,7 @@ export interface PursuitDocument extends mongoose.Document {
   createdDate?: string;
   lastModifiedDate?: string;
   name?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   probability?: number;
   propertyId?: string;
   recordTypeId?: string;

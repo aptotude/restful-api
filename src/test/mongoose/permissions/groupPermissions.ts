@@ -329,7 +329,7 @@ describe("mongoose/permissions/groupPermissions.ts", function() {
 
         expect(record.isPrivate).to.eql(params.isPrivate);
         expect(record.ownerId).to.eql(user._id);
-        expect(record.userIds).to.not.contain(user._id);
+        expect(record.userIds).to.contain(user._id);
       });
     });
 
@@ -353,7 +353,7 @@ describe("mongoose/permissions/groupPermissions.ts", function() {
 
           expect(record.isPrivate).to.eql(params.isPrivate);
           expect(record.ownerId).to.eql(user._id);
-          expect(record.userIds).to.not.contain(user._id);
+          expect(record.userIds).to.contain(user._id);
         });
       });
 

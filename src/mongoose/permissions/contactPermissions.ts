@@ -40,57 +40,65 @@ export class ContactPermissions extends Permissions {
   }
 
   public async readPermissions(record: ContactDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "address",
-      "companyId",
-      "company",
-      "createdAt",
-      "description",
-      "email",
-      "email2",
-      "fax",
-      "firstName",
-      "fullName",
-      "homePhone",
-      "lastName",
-      "mobilePhone",
-      "otherPhone",
-      "ownerId",
-      "phone",
-      "selectedCompany",
-      "title",
-      "type",
-      "updatedAt"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "address",
+        "companyId",
+        "company",
+        "createdAt",
+        "description",
+        "email",
+        "email2",
+        "fax",
+        "firstName",
+        "fullName",
+        "homePhone",
+        "lastName",
+        "mobilePhone",
+        "otherPhone",
+        "ownerId",
+        "phone",
+        "selectedCompany",
+        "title",
+        "type",
+        "updatedAt"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: ContactDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: ContactDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "address",
-      "companyId",
-      "company",
-      "description",
-      "email",
-      "email2",
-      "fax",
-      "firstName",
-      "fullName",
-      "homePhone",
-      "lastName",
-      "mobilePhone",
-      "otherPhone",
-      "phone",
-      "selectedCompany",
-      "title",
-      "type"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "address",
+        "companyId",
+        "company",
+        "description",
+        "email",
+        "email2",
+        "fax",
+        "firstName",
+        "fullName",
+        "homePhone",
+        "lastName",
+        "mobilePhone",
+        "otherPhone",
+        "phone",
+        "selectedCompany",
+        "title",
+        "type"
+      );
+    }
 
     return attributes;
   }

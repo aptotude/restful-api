@@ -8,7 +8,7 @@ export interface ContactGroupDocument extends mongoose.Document {
   memberIds?: mongoose.Types.ObjectId[];
   name?: string;
   numberOfMembers?: number;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
 }
 
 export interface ContactGroupModel extends mongoose.Model<ContactGroupDocument> {

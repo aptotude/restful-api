@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { DealParty, DealPartyDocument, DealPartyPermissions, User } from "../../../mongoose";
+import { DealParty, DealPartyDocument, DealPartyPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -28,7 +28,7 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
         transactionCompany: chance.hash()
       };
 
-      const record = <DealPartyDocument> await permissions.create(params, {}, user);
+      const record = <DealPartyDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.compId).to.eql(params.compId);
       expect(record.company).to.eql(params.company);
@@ -48,14 +48,17 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
 
   describe("read()", function() {
     let record: DealPartyDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
+      user = await User.mock();
       record = await DealParty.mock({
         compId: chance.hash(),
         company: chance.hash(),
         contactId: chance.hash(),
         contractId: chance.hash(),
         listingId: chance.hash(),
+        ownerId: user._id,
         pursuitId: chance.hash(),
         role: chance.hash(),
         sale: chance.hash(),
@@ -68,8 +71,6 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <DealPartyDocument> await permissions.read(record, user);
 
       expect(record.compId).to.exist;
@@ -90,14 +91,14 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
 
   describe("remove()", function() {
     let record: DealPartyDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await DealParty.mock();
+      user = await User.mock();
+      record = await DealParty.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <DealPartyDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -106,13 +107,14 @@ describe("mongoose/permissions/dealPartyPermissions.ts", function() {
 
   describe("update()", function() {
     let record: DealPartyDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await DealParty.mock();
+      user = await User.mock();
+      record = await DealParty.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         compId: chance.hash(),
         company: chance.hash(),

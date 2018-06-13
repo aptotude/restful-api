@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { BuyersNeed, BuyersNeedDocument, BuyersNeedPermissions, User } from "../../../mongoose";
+import { BuyersNeed, BuyersNeedDocument, BuyersNeedPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -30,7 +30,7 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
         name: chance.hash()
       };
 
-      const record = <BuyersNeedDocument> await permissions.create(params, {}, user);
+      const record = <BuyersNeedDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.acquisitionType).to.eql(params.acquisitionType);
       expect(record.buildingType).to.eql(params.buildingType);
@@ -52,8 +52,10 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
 
   describe("read()", function() {
     let record: BuyersNeedDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
+      user = await User.mock();
       record = await BuyersNeed.mock({
         acquisitionType: chance.hash(),
         buildingType: chance.hash(),
@@ -69,13 +71,12 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
         minLirr: chance.integer(),
         minPrice: chance.hash(),
         minSquareFootage: chance.hash(),
-        name: chance.hash()
+        name: chance.hash(),
+        ownerId: user._id
       });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <BuyersNeedDocument> await permissions.read(record, user);
 
       expect(record.acquisitionType).to.exist;
@@ -98,14 +99,14 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
 
   describe("remove()", function() {
     let record: BuyersNeedDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await BuyersNeed.mock();
+      user = await User.mock();
+      record = await BuyersNeed.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <BuyersNeedDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -114,13 +115,14 @@ describe("mongoose/permissions/buyersNeedPermissions.ts", function() {
 
   describe("update()", function() {
     let record: BuyersNeedDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await BuyersNeed.mock();
+      user = await User.mock();
+      record = await BuyersNeed.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         acquisitionType: chance.hash(),
         buildingType: chance.hash(),

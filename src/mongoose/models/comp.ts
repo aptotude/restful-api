@@ -32,7 +32,7 @@ export interface CompDocument extends mongoose.Document {
   occupancyAtClose?: number;
   occupancyDate?: Date;
   options?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   priceType?: string;
   pursuitId?: string;
   recordTypeId?: string;

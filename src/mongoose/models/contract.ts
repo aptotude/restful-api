@@ -22,7 +22,7 @@ export interface ContractDocument extends mongoose.Document {
   lastModifiedDate?: string;
   listingId?: string;
   name?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   probability?: string;
   propertyId?: string;
   pursuitId?: string;

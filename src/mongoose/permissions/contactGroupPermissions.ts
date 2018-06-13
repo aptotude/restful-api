@@ -27,31 +27,39 @@ export class ContactGroupPermissions extends Permissions {
   }
 
   public async readPermissions(record: ContactGroupDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "createdAt",
-      "createdDate",
-      "memberIds",
-      "name",
-      "numberOfMembers",
-      "ownerId",
-      "updatedAt"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "createdAt",
+        "createdDate",
+        "memberIds",
+        "name",
+        "numberOfMembers",
+        "ownerId",
+        "updatedAt"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: ContactGroupDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: ContactGroupDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "createdDate",
-      "memberIds",
-      "name",
-      "numberOfMembers"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "createdDate",
+        "memberIds",
+        "name",
+        "numberOfMembers"
+      );
+    }
 
     return attributes;
   }

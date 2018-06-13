@@ -27,28 +27,36 @@ export class PlaybookPermissions extends Permissions {
     }
 
     public async readPermissions(record: PlaybookDocument, user: UserDocument): Promise<string[]> {
-        const attributes: string[] = [
-            "_id",
-            "name",
-            "ownerId",
-            "targetStage",
-            "taskTemplates"
-        ];
+        const attributes: string[] = [];
+
+        if (record.ownerId.equals(user._id)) {
+            attributes.push(
+                "_id",
+                "name",
+                "ownerId",
+                "targetStage",
+                "taskTemplates"
+            );
+        }
 
         return attributes;
     }
 
     public async removePermissions(record: PlaybookDocument, user: UserDocument): Promise<boolean> {
-        return true;
+        return record.ownerId.equals(user._id);
     }
 
     public async updatePermissions(record: PlaybookDocument, user: UserDocument): Promise<string[]> {
-        const attributes: string[] = [
-            "name",
-            "ownerId",
-            "targetStage",
-            "taskTemplates"
-        ];
+        const attributes: string[] = [];
+
+        if (record.ownerId.equals(user._id)) {
+            attributes.push(
+                "name",
+                "ownerId",
+                "targetStage",
+                "taskTemplates"
+            );
+        }
 
         return attributes;
     }

@@ -19,7 +19,7 @@ export interface BuyersNeedDocument extends mongoose.Document {
   minPrice?: string;
   minSquareFootage?: string;
   name?: string;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
 }
 
 export interface BuyersNeedModel extends mongoose.Model<BuyersNeedDocument> {

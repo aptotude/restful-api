@@ -39,7 +39,7 @@ export interface ContactDocument extends mongoose.Document {
   lastName?: string;
   mobilePhone?: PhoneNumberModel;
   otherPhone?: PhoneNumberModel;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   phone?: PhoneNumberModel;
   recordTypeId?: string;
   selectedCompany?: any;

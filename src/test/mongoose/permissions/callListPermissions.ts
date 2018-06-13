@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { CallList, CallListDocument, CallListPermissions, User } from "../../../mongoose";
+import { CallList, CallListDocument, CallListPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -23,7 +23,7 @@ describe("mongoose/permissions/callListPermissions.ts", function() {
                 type: chance.hash()
             };
 
-            const record = <CallListDocument> await permissions.create(params, {}, user);
+            const record = <CallListDocument> await permissions.create(params, { ownerId: user._id }, user);
 
             expect(record.batchInfo).to.eql(params.batchInfo);
             expect(record.configJson).to.eql(params.configJson);
@@ -38,8 +38,10 @@ describe("mongoose/permissions/callListPermissions.ts", function() {
 
     describe("read()", function() {
         let record: CallListDocument;
+        let user: UserDocument;
 
         beforeEach(async function() {
+            user = await User.mock();
             record = await CallList.mock({
                 batchInfo: chance.hash(),
                 configJson: chance.hash(),
@@ -47,14 +49,13 @@ describe("mongoose/permissions/callListPermissions.ts", function() {
                 description: chance.hash(),
                 dueDate: chance.hash(),
                 name: chance.hash(),
+                ownerId: user._id,
                 sfUserId: chance.hash(),
                 type: chance.hash()
             });
         });
 
         it("returns the record", async function() {
-            const user = await User.mock();
-
             record = <CallListDocument> await permissions.read(record, user);
 
             expect(record.batchInfo).to.exist;
@@ -70,14 +71,14 @@ describe("mongoose/permissions/callListPermissions.ts", function() {
 
     describe("remove()", function() {
         let record: CallListDocument;
+        let user: UserDocument;
 
         beforeEach(async function() {
-            record = await CallList.mock();
+            user = await User.mock();
+            record = await CallList.mock({ ownerId: user._id });
         });
 
         it("returns the record", async function() {
-            const user = await User.mock();
-
             record = <CallListDocument> await permissions.remove(record, user);
 
             expect(record).to.exist;
@@ -86,13 +87,14 @@ describe("mongoose/permissions/callListPermissions.ts", function() {
 
     describe("update()", function() {
         let record: CallListDocument;
+        let user: UserDocument;
 
         beforeEach(async function() {
-            record = await CallList.mock();
+            user = await User.mock();
+            record = await CallList.mock({ ownerId: user._id });
         });
 
         it("updates and returns the record", async function() {
-            const user = await User.mock();
             const params = {
                 batchInfo: chance.hash(),
                 configJson: chance.hash(),

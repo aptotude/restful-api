@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Task, TaskDocument, TaskPermissions, User } from "../../../mongoose";
+import { Task, TaskDocument, TaskPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -29,7 +29,7 @@ describe("mongoose/permissions/taskPermissions.ts", function() {
         whatName: chance.hash()
       };
 
-      const record = <TaskDocument> await permissions.create(params, {}, user);
+      const record = <TaskDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.callDisposition).to.eql(params.callDisposition);
       expect(record.callResult).to.eql(params.callResult);
@@ -50,8 +50,10 @@ describe("mongoose/permissions/taskPermissions.ts", function() {
 
   describe("read()", function() {
     let record: TaskDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
+      user = await User.mock();
       record = await Task.mock({
         callDisposition: chance.hash(),
         callResult: chance.hash(),
@@ -61,6 +63,7 @@ describe("mongoose/permissions/taskPermissions.ts", function() {
         isComplete: chance.bool(),
         lastModifiedDate: chance.hash(),
         marketingStatus: chance.hash(),
+        ownerId: user._id,
         ownerName: chance.hash(),
         priority: chance.hash(),
         subject: chance.hash(),
@@ -71,8 +74,6 @@ describe("mongoose/permissions/taskPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <TaskDocument> await permissions.read(record, user);
 
       expect(record.callDisposition).to.exist;
@@ -94,14 +95,14 @@ describe("mongoose/permissions/taskPermissions.ts", function() {
 
   describe("remove()", function() {
     let record: TaskDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Task.mock();
+      user = await User.mock();
+      record = await Task.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <TaskDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -110,13 +111,14 @@ describe("mongoose/permissions/taskPermissions.ts", function() {
 
   describe("update()", function() {
     let record: TaskDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Task.mock();
+      user = await User.mock();
+      record = await Task.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         callDisposition: chance.hash(),
         callResult: chance.hash(),

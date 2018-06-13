@@ -17,7 +17,7 @@ export interface CompanyDocument extends mongoose.Document {
   fax?: PhoneNumberModel;
   name?: string;
   numberOfEmployees?: number;
-  ownerId?: string;
+  ownerId?: mongoose.Types.ObjectId;
   phone?: PhoneNumberModel;
   shippingAddress?: AddressModel;
   type?: string;

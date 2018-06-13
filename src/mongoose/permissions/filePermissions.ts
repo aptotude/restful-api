@@ -30,7 +30,10 @@ export class FilePermissions extends Permissions {
   }
 
   public async readPermissions(record: FileDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
         "_id",
         "compId",
         "contractId",
@@ -41,17 +44,21 @@ export class FilePermissions extends Permissions {
         "ownerId",
         "pursuitId",
         "updatedAt"
-    ];
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: FileDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: FileDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
         "compId",
         "contractId",
         "isPublic",
@@ -59,7 +66,8 @@ export class FilePermissions extends Permissions {
         "name",
         "ownerId",
         "pursuitId"
-    ];
+      );
+    }
 
     return attributes;
   }

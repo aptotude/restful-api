@@ -36,49 +36,57 @@ export class PursuitPermissions extends Permissions {
   }
 
   public async readPermissions(record: PursuitDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "brokerProposedPrice",
-      "clientCompanyId",
-      "clientContactId",
-      "commissionAmount",
-      "createdAt",
-      "createdDate",
-      "lastModifiedDate",
-      "name",
-      "ownerId",
-      "probability",
-      "propertyId",
-      "recordTypeId",
-      "sellerPriceExpectation",
-      "status",
-      "type",
-      "updatedAt"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "brokerProposedPrice",
+        "clientCompanyId",
+        "clientContactId",
+        "commissionAmount",
+        "createdAt",
+        "createdDate",
+        "lastModifiedDate",
+        "name",
+        "ownerId",
+        "probability",
+        "propertyId",
+        "recordTypeId",
+        "sellerPriceExpectation",
+        "status",
+        "type",
+        "updatedAt"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: PursuitDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: PursuitDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "brokerProposedPrice",
-      "clientCompanyId",
-      "clientContactId",
-      "commissionAmount",
-      "createdDate",
-      "lastModifiedDate",
-      "name",
-      "probability",
-      "propertyId",
-      "recordTypeId",
-      "sellerPriceExpectation",
-      "status",
-      "type"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "brokerProposedPrice",
+        "clientCompanyId",
+        "clientContactId",
+        "commissionAmount",
+        "createdDate",
+        "lastModifiedDate",
+        "name",
+        "probability",
+        "propertyId",
+        "recordTypeId",
+        "sellerPriceExpectation",
+        "status",
+        "type"
+      );
+    }
 
     return attributes;
   }

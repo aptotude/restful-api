@@ -29,35 +29,43 @@ export class OwnershipPermissions extends Permissions {
   }
 
   public async readPermissions(record: OwnershipDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "companyId",
-      "companyIdFromTrigger",
-      "contactId",
-      "contactRole",
-      "createdAt",
-      "isPrimaryContact",
-      "ownerId",
-      "propertyId",
-      "updatedAt"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "companyId",
+        "companyIdFromTrigger",
+        "contactId",
+        "contactRole",
+        "createdAt",
+        "isPrimaryContact",
+        "ownerId",
+        "propertyId",
+        "updatedAt"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: OwnershipDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: OwnershipDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "companyId",
-      "companyIdFromTrigger",
-      "contactId",
-      "contactRole",
-      "isPrimaryContact",
-      "propertyId"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "companyId",
+        "companyIdFromTrigger",
+        "contactId",
+        "contactRole",
+        "isPrimaryContact",
+        "propertyId"
+      );
+    }
 
     return attributes;
   }

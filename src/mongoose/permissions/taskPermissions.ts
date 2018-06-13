@@ -38,53 +38,61 @@ export class TaskPermissions extends Permissions {
   }
 
   public async readPermissions(record: TaskDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "callDisposition",
-      "callResult",
-      "contactId",
-      "createdAt",
-      "description",
-      "dueDate",
-      "isComplete",
-      "lastModifiedDate",
-      "marketingStatus",
-      "ownerId",
-      "ownerName",
-      "priority",
-      "status",
-      "subject",
-      "type",
-      "whatId",
-      "whatName",
-      "updatedAt"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "callDisposition",
+        "callResult",
+        "contactId",
+        "createdAt",
+        "description",
+        "dueDate",
+        "isComplete",
+        "lastModifiedDate",
+        "marketingStatus",
+        "ownerId",
+        "ownerName",
+        "priority",
+        "status",
+        "subject",
+        "type",
+        "whatId",
+        "whatName",
+        "updatedAt"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: TaskDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: TaskDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "callDisposition",
-      "callResult",
-      "contactId",
-      "description",
-      "dueDate",
-      "isComplete",
-      "lastModifiedDate",
-      "marketingStatus",
-      "ownerName",
-      "priority",
-      "status",
-      "subject",
-      "type",
-      "whatId",
-      "whatName"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "callDisposition",
+        "callResult",
+        "contactId",
+        "description",
+        "dueDate",
+        "isComplete",
+        "lastModifiedDate",
+        "marketingStatus",
+        "ownerName",
+        "priority",
+        "status",
+        "subject",
+        "type",
+        "whatId",
+        "whatName"
+      );
+    }
 
     return attributes;
   }

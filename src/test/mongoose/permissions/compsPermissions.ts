@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { Chance } from "chance";
 import * as nock from "nock";
 
-import { Comp, CompDocument, CompPermissions, User } from "../../../mongoose";
+import { Comp, CompDocument, CompPermissions, User, UserDocument } from "../../../mongoose";
 
 const chance = new Chance();
 const index = require("../../");
@@ -50,7 +50,7 @@ describe("mongoose/permissions/compPermissions.ts", function() {
         units: chance.integer()
       };
 
-      const record = <CompDocument> await permissions.create(params, {}, user);
+      const record = <CompDocument> await permissions.create(params, { ownerId: user._id }, user);
 
       expect(record.archive).to.eql(params.archive);
       expect(record.askingPrice).to.eql(params.askingPrice);
@@ -92,8 +92,10 @@ describe("mongoose/permissions/compPermissions.ts", function() {
 
   describe("read()", function() {
     let record: CompDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
+      user = await User.mock();
       record = await Comp.mock({
         archive: chance.bool(),
         askingPrice: chance.integer(),
@@ -117,6 +119,7 @@ describe("mongoose/permissions/compPermissions.ts", function() {
         mortgageAmount: chance.integer(),
         netOperatingIncome: chance.integer(),
         occupancyAtClose: chance.integer(),
+        ownerId: user._id,
         priceType: chance.hash(),
         pursuitId: chance.hash(),
         recordType: chance.hash(),
@@ -134,8 +137,6 @@ describe("mongoose/permissions/compPermissions.ts", function() {
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <CompDocument> await permissions.read(record, user);
 
       expect(record.archive).to.exist;
@@ -178,14 +179,14 @@ describe("mongoose/permissions/compPermissions.ts", function() {
 
   describe("remove()", function() {
     let record: CompDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Comp.mock();
+      user = await User.mock();
+      record = await Comp.mock({ ownerId: user._id });
     });
 
     it("returns the record", async function() {
-      const user = await User.mock();
-
       record = <CompDocument> await permissions.remove(record, user);
 
       expect(record).to.exist;
@@ -194,13 +195,14 @@ describe("mongoose/permissions/compPermissions.ts", function() {
 
   describe("update()", function() {
     let record: CompDocument;
+    let user: UserDocument;
 
     beforeEach(async function() {
-      record = await Comp.mock();
+      user = await User.mock();
+      record = await Comp.mock({ ownerId: user._id });
     });
 
     it("updates and returns the record", async function() {
-      const user = await User.mock();
       const params = {
         archive: chance.bool(),
         askingPrice: chance.integer(),

@@ -37,50 +37,58 @@ export class DealPartyPermissions extends Permissions {
   }
 
   public async readPermissions(record: DealPartyDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "_id",
-      "compId",
-      "company",
-      "contactId",
-      "contractId",
-      "createdAt",
-      "listingId",
-      "ownerId",
-      "pursuitId",
-      "role",
-      "sale",
-      "saleCap",
-      "saleDate",
-      "salePrice",
-      "salePriceSF",
-      "transactionCompany",
-      "updatedAt"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "_id",
+        "compId",
+        "company",
+        "contactId",
+        "contractId",
+        "createdAt",
+        "listingId",
+        "ownerId",
+        "pursuitId",
+        "role",
+        "sale",
+        "saleCap",
+        "saleDate",
+        "salePrice",
+        "salePriceSF",
+        "transactionCompany",
+        "updatedAt"
+      );
+    }
 
     return attributes;
   }
 
   public async removePermissions(record: DealPartyDocument, user: UserDocument): Promise<boolean> {
-    return true;
+    return record.ownerId.equals(user._id);
   }
 
   public async updatePermissions(record: DealPartyDocument, user: UserDocument): Promise<string[]> {
-    const attributes: string[] = [
-      "compId",
-      "company",
-      "contactId",
-      "contractId",
-      "listingId",
-      "ownerId",
-      "pursuitId",
-      "role",
-      "sale",
-      "saleCap",
-      "saleDate",
-      "salePrice",
-      "salePriceSF",
-      "transactionCompany"
-    ];
+    const attributes: string[] = [];
+
+    if (record.ownerId.equals(user._id)) {
+      attributes.push(
+        "compId",
+        "company",
+        "contactId",
+        "contractId",
+        "listingId",
+        "ownerId",
+        "pursuitId",
+        "role",
+        "sale",
+        "saleCap",
+        "saleDate",
+        "salePrice",
+        "salePriceSF",
+        "transactionCompany"
+      );
+    }
 
     return attributes;
   }
