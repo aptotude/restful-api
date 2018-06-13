@@ -4,6 +4,7 @@ import * as mongoose from "mongoose";
 
 import {
     BuyersNeedsController,
+    CallListsController,
     CompaniesController,
     CompsController,
     ContactGroupsController,
@@ -14,6 +15,7 @@ import {
     ListingsController,
     OffersController,
     OwnershipsController,
+    PlaybooksController,
     PropertiesController,
     PursuitsController,
     TasksController,
@@ -23,6 +25,8 @@ import {
 import {
     BuyersNeed,
     BuyersNeedPermissions,
+    CallList,
+    CallListPermissions,
     Company,
     CompanyPermissions,
     Comp,
@@ -43,6 +47,8 @@ import {
     OfferPermissions,
     Ownership,
     OwnershipPermissions,
+    Playbook,
+    PlaybookPermissions,
     Property,
     PropertyPermissions,
     Pursuit,
@@ -60,6 +66,7 @@ export class DataController {
         const promises: any[] = [];
 
         promises.push(this.find(req.query.collections, BuyersNeedsController, "buyersNeeds", req));
+        promises.push(this.find(req.query.collections, CallListsController, "callLists", req));
         promises.push(this.find(req.query.collections, CompaniesController, "companies", req));
         promises.push(this.find(req.query.collections, CompsController, "comps", req));
         promises.push(this.find(req.query.collections, ContactGroupsController, "contactGroups", req));
@@ -70,6 +77,7 @@ export class DataController {
         promises.push(this.find(req.query.collections, ListingsController, "listings", req));
         promises.push(this.find(req.query.collections, OffersController, "offers", req));
         promises.push(this.find(req.query.collections, OwnershipsController, "ownerships", req));
+        promises.push(this.find(req.query.collections, PlaybooksController, "playbooks", req));
         promises.push(this.find(req.query.collections, PropertiesController, "properties", req));
         promises.push(this.find(req.query.collections, PursuitsController, "pursuits", req));
         promises.push(this.find(req.query.collections, TasksController, "tasks", req));
@@ -93,6 +101,7 @@ export class DataController {
         const createPromises: any[] = [];
 
         createPromises.push.apply(createPromises, this.create(BuyersNeedPermissions, req.body.buyersNeeds, req.user));
+        createPromises.push.apply(createPromises, this.create(CallListPermissions, req.body.callLists, req.user));
         createPromises.push.apply(createPromises, this.create(CompanyPermissions, req.body.companies, req.user));
         createPromises.push.apply(createPromises, this.create(CompPermissions, req.body.comps, req.user));
         createPromises.push.apply(createPromises, this.create(ContactGroupPermissions, req.body.contactGroups, req.user));
@@ -103,6 +112,7 @@ export class DataController {
         createPromises.push.apply(createPromises, this.create(ListingPermissions, req.body.listings, req.user));
         createPromises.push.apply(createPromises, this.create(OfferPermissions, req.body.offers, req.user));
         createPromises.push.apply(createPromises, this.create(OwnershipPermissions, req.body.ownerships, req.user));
+        createPromises.push.apply(createPromises, this.create(PlaybookPermissions, req.body.playbooks, req.user));
         createPromises.push.apply(createPromises, this.create(PropertyPermissions, req.body.properties, req.user));
         createPromises.push.apply(createPromises, this.create(PursuitPermissions, req.body.pursuits, req.user));
         createPromises.push.apply(createPromises, this.create(TaskPermissions, req.body.tasks, req.user));
@@ -180,6 +190,7 @@ export class DataController {
     private removeUserDocuments(user: UserDocument) {
         return Promise.all([
             BuyersNeed.remove({ ownerId: user._id }),
+            CallList.remove({ ownerId: user._id }),
             Company.remove({ ownerId: user._id }),
             Comp.remove({ ownerId: user._id }),
             ContactGroup.remove({ ownerId: user._id }),
@@ -190,6 +201,7 @@ export class DataController {
             Listing.remove({ ownerId: user._id }),
             Offer.remove({ ownerId: user._id }),
             Ownership.remove({ ownerId: user._id }),
+            Playbook.remove({ ownerId: user._id }),
             Property.remove({ ownerId: user._id }),
             Pursuit.remove({ ownerId: user._id }),
             Task.remove({ ownerId: user._id })

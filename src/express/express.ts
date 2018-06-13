@@ -14,6 +14,7 @@ import {
 
   AuthenticationRouter,
   BuyersNeedsRouter,
+  CallListsRouter,
   CompsRouter,
   CompaniesRouter,
   ContactGroupsRouter,
@@ -26,6 +27,7 @@ import {
   ListingsRouter,
   OffersRouter,
   OwnershipsRouter,
+  PlaybooksRouter,
   PropertiesRouter,
   PursuitsRouter,
   SearchRouter,
@@ -104,6 +106,7 @@ export class Express {
 
     const authenticationRouter = new AuthenticationRouter(router);
     const buyersNeedsRouter = new BuyersNeedsRouter(router);
+    const callListsRouter = new CallListsRouter(router);
     const compsRouter = new CompsRouter(router);
     const companiesRouter = new CompaniesRouter(router);
     const contactsRouter = new ContactsRouter(router);
@@ -116,6 +119,7 @@ export class Express {
     const listingsRouter = new ListingsRouter(router);
     const offersRouter = new OffersRouter(router);
     const ownershipsRouter = new OwnershipsRouter(router);
+    const playbooksRouter = new PlaybooksRouter(router);
     const propertiesRouter = new PropertiesRouter(router);
     const pursuitsRouter = new PursuitsRouter(router);
     const searchRouter = new SearchRouter(router);

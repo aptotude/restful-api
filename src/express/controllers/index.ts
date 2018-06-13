@@ -1,6 +1,7 @@
 export * from "./restController";
 export * from "./authenticationController";
 export * from "./buyersNeedsController";
+export * from "./callListsController";
 export * from "./compsController";
 export * from "./companiesController";
 export * from "./contactsController";
@@ -13,6 +14,7 @@ export * from "./groupsController";
 export * from "./listingsController";
 export * from "./offersController";
 export * from "./ownershipsController";
+export * from "./playbooksController";
 export * from "./propertiesController";
 export * from "./pursuitsController";
 export * from "./tasksController";

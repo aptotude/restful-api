@@ -1,5 +1,6 @@
 export * from "./permissions";
 export * from "./buyersNeedPermissions";
+export * from "./callListPermissions";
 export * from "./compPermissions";
 export * from "./companyPermissions";
 export * from "./contactPermissions";
@@ -11,6 +12,7 @@ export * from "./groupPermissions";
 export * from "./listingPermissions";
 export * from "./offerPermissions";
 export * from "./ownershipPermissions";
+export * from "./playbookPermissions";
 export * from "./propertyPermissions";
 export * from "./pursuitPermissions";
 export * from "./taskPermissions";
