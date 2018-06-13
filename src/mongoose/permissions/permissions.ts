@@ -173,7 +173,7 @@ export abstract class Permissions {
     // Update record with authorized fields
     params = Object.assign({}, params);
     params = this.removeUnauthorizedAttributes(params, updatePermissions);
-    params = this.removeArrayValues(params, record.schema);
+    // params = this.removeArrayValues(params, record.schema);
     Object.assign(record, params, override);
     record = await record.save();
 
