@@ -84,6 +84,8 @@ export class SearchController {
                 "type"
             ], term);
 
+            req.query.where.status = { $ne: "Closed" };
+
             promises.push(this.contractsController.find(req));
         }
 
@@ -92,6 +94,8 @@ export class SearchController {
                 "name",
                 "type"
             ], term);
+
+            req.query.where.onMarketStatus = { $nin: ["In Contract", "Closed"] };
 
             promises.push(this.listingsController.find(req));
         }
@@ -116,6 +120,8 @@ export class SearchController {
                 "name",
                 "type"
             ], term);
+
+            req.query.where.status = { $ne: "Won" };
 
             promises.push(this.pursuitsController.find(req));
         }
