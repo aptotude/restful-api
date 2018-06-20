@@ -104,6 +104,7 @@ export class CompPermissions extends Permissions {
         "occupancyAtClose",
         "occupancyDate",
         "options",
+        "ownerId",
         "priceType",
         "pursuitId",
         "recordTypeId",
