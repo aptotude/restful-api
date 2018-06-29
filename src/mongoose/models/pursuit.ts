@@ -10,12 +10,15 @@ export interface PursuitDocument extends mongoose.Document {
   commissionAmount?: number;
   createdDate?: string;
   lastModifiedDate?: string;
+  listProbability?: number;
   name?: string;
   ownerId?: mongoose.Types.ObjectId;
   probability?: number;
   propertyId?: string;
+  pursuitDeliveryDate?: Date;
   recordTypeId?: string;
   sellerPriceExpectation?: number;
+  sellProbability?: number;
   status?: string;
   type?: string;
 }
@@ -31,6 +34,7 @@ const schema = new mongoose.Schema({
   commissionAmount: Number,
   createdDate: String,
   lastModifiedDate: String,
+  listProbability: Number,
   name: String,
   ownerId: {
     ref: "User",
@@ -38,7 +42,9 @@ const schema = new mongoose.Schema({
   },
   probability: Number,
   propertyId: String,
+  pursuitDeliveryDate: Date,
   recordTypeId: String,
+  sellProbability: Number,
   sellerPriceExpectation: Number,
   status: String,
   type: String

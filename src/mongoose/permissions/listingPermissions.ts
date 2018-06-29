@@ -11,6 +11,7 @@ export class ListingPermissions extends Permissions {
 
   public async createPermissions(user: UserDocument): Promise<string[]> {
     const attributes: string[] = [
+      "acquisitionType",
       "activityId",
       "askingPriceActual",
       "capRate",
@@ -62,6 +63,7 @@ export class ListingPermissions extends Permissions {
     if (record.ownerId.equals(user._id)) {
       attributes.push(
         "_id",
+        "acquisitionType",
         "activityId",
         "askingPriceActual",
         "capRate",
@@ -114,6 +116,7 @@ export class ListingPermissions extends Permissions {
 
     if (record.ownerId.equals(user._id)) {
       attributes.push(
+        "acquisitionType",
         "activityId",
         "askingPriceActual",
         "capRate",

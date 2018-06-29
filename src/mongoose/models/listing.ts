@@ -4,6 +4,7 @@ import * as mongoose from "mongoose";
 export interface ListingDocument extends mongoose.Document {
   [key: string]: any;
 
+  acquisitionType?: string;
   activityId?: string;
   askingPriceActual?: number;
   capRate?: number;
@@ -46,6 +47,7 @@ export interface ListingModel extends mongoose.Model<ListingDocument> {
 }
 
 const schema = new mongoose.Schema({
+  acquisitionType: String,
   activityId: String,
   askingPriceActual: Number,
   capRate: Number,

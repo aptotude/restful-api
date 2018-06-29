@@ -16,6 +16,7 @@ export interface CompDocument extends mongoose.Document {
   commissionPercent?: number;
   contractId?: string;
   downPayment?: number;
+  escalations?: string;
   grossCommissionAmount?: number;
   landlordCompanyId?: string;
   landlordContactId?: string;
@@ -24,10 +25,10 @@ export interface CompDocument extends mongoose.Document {
   leaseTermMonths?: number;
   leaseTotal?: number;
   leaseType?: string;
-  leasedPropertyId?: string;
   listingId?: string;
+  listingType?: string;
+  leasedPropertyId?: string;
   mortgageAmount?: number;
-  name?: string;
   netOperatingIncome?: number;
   occupancyAtClose?: number;
   occupancyDate?: Date;
@@ -46,6 +47,7 @@ export interface CompDocument extends mongoose.Document {
   sellerCompanyId?: string;
   soldPropertyId?: string;
   squareFootage?: number;
+  suiteOrFloor?: string;
   tenancyAtClose?: string;
   tenantCompanyId?: string;
   tenantContactId?: string;
@@ -72,7 +74,10 @@ const schema = new mongoose.Schema({
   commissionPercent: Number,
   contractId: String,
   downPayment: Number,
+  escalations: String,
   grossCommissionAmount: Number,
+  landlordCompanyId: String,
+  landlordContactId: String,
   leaseCommencementDate: Date,
   leaseExpirationDate: Date,
   leaseTermMonths: Number,
@@ -80,10 +85,12 @@ const schema = new mongoose.Schema({
   leaseType: String,
   leasedPropertyId: String,
   listingId: String,
+  listingType: String,
   mortgageAmount: Number,
-  name: String,
   netOperatingIncome: Number,
   occupancyAtClose: Number,
+  occupancyDate: Date,
+  options: String,
   ownerId: {
     ref: "User",
     type: mongoose.Schema.Types.ObjectId
@@ -92,14 +99,21 @@ const schema = new mongoose.Schema({
   pursuitId: String,
   recordType: String,
   recordTypeId: String,
+  rentCommencementDate: Date,
+  rentalRate: Number,
+  rentalRateType: String,
   researchComplete: Boolean,
   salePrice: Number,
   sellerCompanyId: String,
   sellerId: String,
   soldPropertyId: String,
   squareFootage: Number,
+  suiteOrFloor: String,
   tenancyAtClose: String,
+  tenantCompanyId: String,
+  tenantContactId: String,
   termRemainingAtClose: String,
+  transactionDate: Date,
   type: String,
   units: Number
 }, {

@@ -17,10 +17,12 @@ export class PursuitPermissions extends Permissions {
       "commissionAmount",
       "createdDate",
       "lastModifiedDate",
+      "listProbability",
       "name",
       "probability",
       "propertyId",
       "recordTypeId",
+      "sellProbability",
       "sellerPriceExpectation",
       "status",
       "type"
